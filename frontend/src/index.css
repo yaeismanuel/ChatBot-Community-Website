@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Carter+One&family=Edu+NSW+ACT+Foundation:wght@400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Protest+Revolution&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  outline: none;
+  list-style: none;
+  text-decoration: none;
+  box-sizing: border-box;
+  font-family: 'Montserrat';
+}
+
+:root {
+  --bg: #FFFFFF;
+  --softColor: #fafafa;
+  --darkColor: #EDEEEB;
+  --textColor: #31393C;
+  --primary: #3E96F4;
+}
+
+/* Global styles */
+body {
+  color: var(--textColor);
+  background: var(--bg);
+}
+.container {
+  padding: 1rem;
+}
+.container h2{
+  text-align: center;
+}
+.contents{
+  margin: 1rem 0 0;
+}
+
+/* Header styles */
+header {
+  width: 100%;
+  padding: 0.5rem;
+  display: grid;
+  grid-template-columns: max-content 1fr max-content;
+  align-items: center;
+  background: var(--darkColor);
+  box-shadow: 0 0 3px var(--darkColor);
+}
+header .menuBtn {
+  display: flex;
+  align-items: center;
+  font-size: 1.55rem;
+}
+.logo {
+  display: flex;
+  justify-content: center;
+}
+.logo .logoIcon{
+  text-align: center;
+  width: max-content;
+}
+
+
+/* Navbar styles */
+nav {
+  width: max-content;
+  border-radius: 10px;
+  padding: 0.35rem 0.5rem;
+  display: flex;
+  gap: 5px;
+  position: fixed;
+  left: 50%;
+  bottom: 1rem;
+  transform: translateX(-50%);
+  background: transparent;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 0 4px var(--primary);
+  overflow: hidden;
+}
+nav li {
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  padding: 0.3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+nav li:hover {
+  background: var(--primary);
+}
+
+/* Announcements page styles */
+.announceCards{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.announceCard{
+  min-height: 100px;
+  border-radius: 10px;
+  background: var(--softColor);
+  box-shadow: 0 0 1px var(--darkColor);
+  overflow: hidden;
+}
+.announceCard .cardHead{
+  padding: 0.5rem;
+  background: var(--darkColor);
+}
+.cardHead .cardAuthor{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.cardAuthor .authorIcon{
+  width: 30px;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  background: var(--primary);
+}
+.cardAuthor .authorInfo{
+  display: flex;
+  flex-direction: column;
+}
+.cardAuthor p{
+  font-size: 0.95rem;
+}
+.cardAuthor span{
+  font-size: 0.7rem;
+}
+.announceCard .cardBody{
+  padding: 0.5rem 1rem;
+}
