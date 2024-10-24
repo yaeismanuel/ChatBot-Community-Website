@@ -10,7 +10,6 @@ const Header = () => {
       </div>
       <div className="logo">
         <div className="logoIcon">
-          chatbot<br />
           community
         </div>
       </div>
