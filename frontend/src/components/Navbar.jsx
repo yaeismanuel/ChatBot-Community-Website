@@ -1,33 +1,41 @@
+import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { FaGlobe } from "react-icons/fa"; 
-import { TbApi } from "react-icons/tb"; 
-import { IoIosMegaphone } from "react-icons/io"; 
-import { BsMegaphoneFill } from "react-icons/bs";
-import { FaUsers } from "react-icons/fa";
+import { NavbarContext } from '../App';
+
+// import react icons
+import { BiSolidMegaphone } from "react-icons/bi";
+import { FaUsersLine, FaServer } from "react-icons/fa6";
+import { FaGlobe, FaGlobeAmericas, FaUsers, FaCannabis } from "react-icons/fa";
 
 const Navbar = () => {
+  const { active, setActive } = useContext(NavbarContext);
   
   return (
     <div className="navbar">
       <nav>
-        <li>
+        <li className={ active.sites && "navActive" }>
+          <Link to="/websites">
+            <FaGlobeAmericas className="navIcon" />
+          </Link>
+        </li>
+        <li className={ active.apis && "navActive" }>
+          <Link to="/apis">
+            <FaCannabis className="navIcon" />
+          </Link>
+        </li>
+        <li className={ active.announce && "navActive" }>
           <Link to="/">
-            <IoIosMegaphone />
+            <BiSolidMegaphone className="navIcon" />
           </Link>
         </li>
-        <li>
-          <Link to="/about">
-            <FaGlobe />
+        <li className={ active.pages && "navActive" }>
+          <Link to="/pages">
+            <FaServer className="navIcon" />
           </Link>
         </li>
-        <li>
+        <li className={ active.about && "navActive" }>
           <Link to="/about">
-            <TbApi />
-          </Link>
-        </li>
-        <li>
-          <Link to="/about">
-            <FaUsers />
+            <FaUsers className="navIcon" />
           </Link>
         </li>
       </nav>

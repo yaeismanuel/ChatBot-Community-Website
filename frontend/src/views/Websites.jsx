@@ -1,17 +1,17 @@
 import { useEffect, useContext } from 'react';
 import { NavbarContext } from '../App';
 
-const About = () => {
+const Websites = () => {
   const { setActive } = useContext(NavbarContext);
   
   useEffect(() => {
-    setActive({ about: true })
+    setActive({ sites: true })
   })
   return (
     <div className="container">
-      About
+      Websites
     </div>
   )
 }
 
-export default About
+export default Websites
