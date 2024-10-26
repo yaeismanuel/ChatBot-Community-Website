@@ -1,13 +1,13 @@
 import { useEffect, useContext } from 'react';
-import { NavbarContext } from '../App';
+import { ContextData } from '../App';
 
 
 const APIs = () => {
-  const { setActive } = useContext(NavbarContext);
+  const { setActive } = useContext(ContextData);
   
   useEffect(() => {
     setActive({ apis: true })
-  })
+  }, [])
   return (
     <div className="container">
       APIs

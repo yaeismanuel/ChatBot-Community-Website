@@ -1,12 +1,12 @@
 import { useEffect, useContext } from 'react';
-import { NavbarContext } from '../App';
+import { ContextData } from '../App';
 
 const Pages = () => {
-  const { setActive } = useContext(NavbarContext);
+  const { setActive } = useContext(ContextData);
   
   useEffect(() => {
     setActive({ pages: true })
-  })
+  }, [])
   return (
     <div className="container">
       Pages

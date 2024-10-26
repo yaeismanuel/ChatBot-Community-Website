@@ -11,18 +11,21 @@ import About from './views/About';
 // components
 import Header from './components/Header';
 import Navbar from './components/Navbar';
+import Menu from './components/Menu';
 
 // context
-export const NavbarContext = createContext();
+export const ContextData = createContext();
 
 function App() {
   const [active, setActive] = useState({});
+  const [toggle, setToggle] = useState(false);
   
   return (
-    <NavbarContext.Provider value={{ active, setActive }}>
+    <ContextData.Provider value={{ active, setActive, toggle, setToggle }}>
       <main>
         <Router>
           <Header />
+          <Menu />
           <Routes>
             <Route path="/" element={ <Home /> } />
             <Route path="/websites" element={ <Websites /> } />
@@ -33,7 +36,7 @@ function App() {
           <Navbar />
         </Router>
       </main>
-    </NavbarContext.Provider>
+    </ContextData.Provider>
   )
 }
 

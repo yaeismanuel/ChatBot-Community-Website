@@ -1,14 +1,14 @@
 import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { NavbarContext } from '../App';
+import { ContextData } from '../App';
 
 // import react icons
 import { BiSolidMegaphone } from "react-icons/bi";
 import { FaUsersLine, FaServer } from "react-icons/fa6";
-import { FaGlobe, FaGlobeAmericas, FaUsers, FaCannabis } from "react-icons/fa";
+import { FaGlobe, FaGlobeAmericas, FaUsers, FaCannabis, FaPager } from "react-icons/fa";
 
 const Navbar = () => {
-  const { active, setActive } = useContext(NavbarContext);
+  const { active, setActive } = useContext(ContextData);
   
   return (
     <div className="navbar">
@@ -30,7 +30,7 @@ const Navbar = () => {
         </li>
         <li className={ active.pages && "navActive" }>
           <Link to="/pages">
-            <FaServer className="navIcon" />
+            <FaPager className="navIcon" />
           </Link>
         </li>
         <li className={ active.about && "navActive" }>

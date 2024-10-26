@@ -1,12 +1,12 @@
 import { useEffect, useContext } from 'react';
-import { NavbarContext } from '../App';
+import { ContextData } from '../App';
 
 const About = () => {
-  const { setActive } = useContext(NavbarContext);
+  const { setActive } = useContext(ContextData);
   
   useEffect(() => {
     setActive({ about: true })
-  })
+  }, [])
   return (
     <div className="container">
       About
