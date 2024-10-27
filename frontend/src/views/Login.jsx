@@ -1,5 +1,6 @@
 import { useState, useRef, useContext } from 'react';
 import { ContextData } from '../App';
+import { server } from '../config.json';
 import axios from 'axios';
 
 const Login = () => {
@@ -13,10 +14,8 @@ const Login = () => {
       username: usernameRef.current.value,
       password: passwordRef.current.value,
     }
-    const url = 'http://localhost:5000/login';
-    const { data } = await axios.post(url, credentials);
+    const { data } = await axios.post(`${server}/login`, credentials);
     setUserData(data.response)
-    console.log(data);
   }
   return (
     <div className="login">

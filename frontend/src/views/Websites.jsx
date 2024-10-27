@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext, useRef } from 'react';
 import { ContextData } from '../App';
 import { DisplayWebsites } from '../components/DisplayWebsites';
+import { server } from '../config.json';
 import axios from 'axios';
 
 const Websites = () => {
@@ -14,7 +15,7 @@ const Websites = () => {
     try {
       if (abortController.current) abortController.current.abort();
       abortController.current = new AbortController();
-      const { data } = await axios.get('http://localhost:5000/api/websites', { signal: abortController.current.signal });
+      const { data } = await axios.get(`${server}/api/websites`, { signal: abortController.current.signal });
       if (data) {
         setWebList(data.websites);
         setLoading(false);

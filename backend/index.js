@@ -17,6 +17,7 @@ app.use((req, res, next) => {
 })
 
 // routes
+apo.get('/', (req, res) => res.send('ChatBot Community Server 🤖'));
 app.use(require('./routes/login-page'));
 app.use('/api/websites', require('./routes/websites-page'));
 
