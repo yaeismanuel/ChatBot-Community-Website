@@ -7,6 +7,7 @@ import Websites from './views/Websites';
 import Apis from './views/APIs';
 import Pages from './views/Pages';
 import About from './views/About';
+import Login from './views/Login';
 
 // components
 import Header from './components/Header';
@@ -19,9 +20,19 @@ export const ContextData = createContext();
 function App() {
   const [active, setActive] = useState({});
   const [toggle, setToggle] = useState(false);
+  const [userData, setUserData] = useState(null);
+  
+  const contextValue = {
+    active,
+    setActive,
+    toggle,
+    setToggle,
+    userData,
+    setUserData
+  }
   
   return (
-    <ContextData.Provider value={{ active, setActive, toggle, setToggle }}>
+    <ContextData.Provider value={contextValue}>
       <main>
         <Router>
           <Header />
@@ -32,6 +43,7 @@ function App() {
             <Route path="/apis" element={ <Apis /> } />
             <Route path="/pages" element={ <Pages /> } />
             <Route path="/about" element={ <About /> } />
+            <Route path="/login" element={ <Login /> } />
           </Routes>
           <Navbar />
         </Router>

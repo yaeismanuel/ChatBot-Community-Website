@@ -1,13 +1,38 @@
-import { useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 import { ContextData } from '../App';
-import Logo from '../assets/logo.jpg';
+import { DisplayWebsites } from '../components/DisplayWebsites';
+import axios from 'axios';
 
 const Websites = () => {
   const { setActive } = useContext(ContextData);
   
+  const [loading, setLoading] = useState(true);
+  const [webList, setWebList] = useState([]);
+  const abortController = useRef(null);
+  
+  const fetchWebsites = async () => {
+    try {
+      if (abortController.current) abortController.current.abort();
+      abortController.current = new AbortController();
+      const { data } = await axios.get('http://localhost:5000/api/websites', { signal: abortController.current.signal });
+      if (data) {
+        setWebList(data.websites);
+        setLoading(false);
+      }
+    } catch (e) {
+      if (e.code === 'ERR_CANCELED') return;
+      console.log(e);
+    }
+  }
+  
   useEffect(() => {
-    setActive({ sites: true })
-  }, [])
+    setActive({ sites: true });
+    
+    fetchWebsites();
+  }, []);
+  
+  if (loading) return <p>Loading...</p>
+  
   return (
     <div className="container">
       <h2 className="h2">🌐 Websites</h2>
@@ -15,53 +40,17 @@ const Websites = () => {
       <div className="tableContents">
         <h3>List of Websites:</h3>
         <ol>
-          <li>
-            <a href="#web1">Websites 1</a>
-          </li>
-          <li>
-            <a href="#web2">Websites 2</a>
-          </li>
+          {
+            webList.map((web, id) => (
+              <li key={ id + 1 }>
+                <a href={`#${ id + 1 }`}>{ web.name }</a>
+              </li>
+            ))
+          }
         </ol>
       </div>
       <div className="websites">
-        <div id="web1" className="website">
-          <h3>1. CodeBuddy Solutions Official Website</h3>
-          <div className="webImage" style={{ backgroundImage: `url("${Logo}")`}}>
-          </div>
-          <div className="webLink">
-            <a href="https://codebuddysltns.verahost.ph">https://codebuddysltns.verahost.ph</a>
-          </div>
-          <p>Nulla veniam commodo laboris ad et non cillum duis eiusmod laborum occaecat velit. Duis aliqua quis dolore officia velit veniam. Ex sit qui excepteur sit consectetur occaecat pariatur occaecat anim veniam aute occaecat ipsum sint. Reprehenderit officia adipisicing consequat voluptate officia dolore deserunt commodo cillum tempor culpa dolore.</p>
-          <div className="webInfo">
-            <p>
-              <strong>Developer: </strong>
-              <span>Renz Cole</span>
-            </p>
-            <p>
-              <strong>FB Account: </strong>
-              <span>@bosscleo3233</span>
-            </p>
-          </div>
-        </div>
-        <div id="web2" className="website">
-          <h3>2. CodeBuddy Solutions Official Website</h3>
-          <div className="webImage" style={{ backgroundImage: `url("${Logo}")`}}>
-          </div>
-          <div className="webLink">
-            <a href="https://codebuddysltns.verahost.ph">https://codebuddysltns.verahost.ph</a>
-          </div>
-          <p>Nulla veniam commodo laboris ad et non cillum duis eiusmod laborum occaecat velit. Duis aliqua quis dolore officia velit veniam. Ex sit qui excepteur sit consectetur occaecat pariatur occaecat anim veniam aute occaecat ipsum sint. Reprehenderit officia adipisicing consequat voluptate officia dolore deserunt commodo cillum tempor culpa dolore.</p>
-          <div className="webInfo">
-            <p>
-              <strong>Developer: </strong>
-              <span>Renz Cole</span>
-            </p>
-            <p>
-              <strong>FB Account: </strong>
-              <span>@bosscleo3233</span>
-            </p>
-          </div>
-        </div>
+        <DisplayWebsites websites={ webList } />
       </div>
     </div>
   )

@@ -55,6 +55,42 @@ main {
   margin: 1rem 0 0;
 }
 
+/* Login styles */
+.login{
+  width: 100%;
+  padding: 1rem;
+  text-align: center;
+}
+.login form{
+  width: 100%;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.login label{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+.login input{
+  padding: 5px 7px;
+  border: 0;
+  border-radius: 5px;
+  background: var(--softColor);
+  box-shadow: 0 0 1.5px 0.2px var(--primary);
+}
+.login button{
+  width: max-content;
+  padding: 0.25rem 1.4rem;
+  border: 0;
+  border-radius: 5px;
+  background: var(--darkColor);
+  box-shadow: 0 0 1.5px 0.2px var(--primary);
+}
+
 /* Header styles */
 header {
   width: 100%;
@@ -117,17 +153,20 @@ header .mode{
   justify-content: center;
   align-items: center;
   position: absolute;
-  top: 7px;
-  right: 7px;
+  top: 8px;
+  right: 9px;
 }
 .profile .closeIcon{
-  font-size: 1.1rem;
+  font-size: 1.4rem;
+  opacity: 0.6;
 }
 .profile .profilePic{
   width: 60px;
   aspect-ratio: 1/1;
   border-radius: 50%;
-  background: var(--primary);
+  border: 2px solid var(--primary);
+  background-size: cover;
+  background-position: center;
 }
 .profile .profileInfo{
   padding: 0.5rem 0;
@@ -139,6 +178,13 @@ header .mode{
 .profileInfo span{
   white-space: nowrap;
   font-size: 0.85rem;
+}
+.profileInfo button{
+  padding: 0.25rem 1.4rem;
+  border: 0;
+  border-radius: 5px;
+  background: var(--softColor);
+  box-shadow: 0 0 1.5px 0.2px var(--primary);
 }
 .menu .menuContents{
   width: 100%;
@@ -278,12 +324,13 @@ nav .navActive{
   text-decoration-color: var(--primary);
 }
 .websites{
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
 }
 .websites .website{
-  
+  width: 100%;
 }
 .website h3{
   padding: 0.5rem 0;
@@ -304,7 +351,7 @@ nav .navActive{
   text-decoration: underline;
   text-decoration-color: var(--primary);
 }
-.webInfo p{
+.webInfo div{
   margin: 0.5rem 0 0;
   display: flex;
   gap: 10px;
