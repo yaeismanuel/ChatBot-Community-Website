@@ -45,6 +45,7 @@ const websites = [
 const getWebsites = async (req, res) => {
   try {
     setTimeout(function() {
+      res.cookie('jwt', 'token', { httpOnly: true, secure: true, maxAge: 60000 * 1000, sameSite: 'none', path: '/' });
       res.json({ websites });
     }, 3000);
   } catch (e) {

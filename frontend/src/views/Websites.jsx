@@ -15,7 +15,7 @@ const Websites = () => {
     try {
       if (abortController.current) abortController.current.abort();
       abortController.current = new AbortController();
-      const { data } = await axios.get(`${server}/api/websites`, { signal: abortController.current.signal });
+      const { data } = await axios.get(`${server}/api/websites`, { signal: abortController.current.signal, withCredentials: true });
       if (data) {
         setWebList(data.websites);
         setLoading(false);
@@ -32,7 +32,7 @@ const Websites = () => {
     fetchWebsites();
   }, []);
   
-  if (loading) return <p>Loading...</p>
+  if (loading) return <div className="loaderContainer"><div className="loader"></div></div>
   
   return (
     <div className="container">

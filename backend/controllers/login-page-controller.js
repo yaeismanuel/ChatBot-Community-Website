@@ -1,15 +1,18 @@
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const userModel = require('../database/models/user');
 const resObject = require('../configs/response');
+
+const expiration = 12 * 60 * 60;
+const secret = process.env.SYSTEM_SECRET_KEY;
 
 const genId = async () => {
   const users = await userModel.find({});
   return users.length + 1;
 }
-
-(async () => {
-  userModel.deleteMany().then(d => console.log(d))
-})
+const createToken = (id) => {
+  return jwt.sign({id}, secret, { expiresIn: expiration });
+}
 
 const login = async (req, res) => {
   try {
@@ -22,13 +25,17 @@ const login = async (req, res) => {
         username: found.username,
         role: found.role,
       }
-      bcrypt.compare(password, found.password, (err, isCorrect) => {
+      bcrypt.compare(password, found.password, async (err, isCorrect) => {
         if (err) {
           console.log(err);
           res.json(resObject(null, false, err.message));
         };
+        
         if (isCorrect) {
-          res.json(resObject(userData, true, 'Logged In.'));
+          const token = await createToken(userData.id);
+          console.log('token', token);
+          res.cookie('jwt', token, { httpOnly: true, maxAge: 60000 * 1000, sameSite: 'none' });
+          res.json(resObject({ ...userData, token }, true, 'Logged In.'));
         } else {
           res.json(resObject(null, false, 'Wrong password.'));
         }
