@@ -28,6 +28,7 @@ app.get('/', (req, res) => res.send('ChatBot Community Server 🤖'));
 app.use(require('./routes/login-page'));
 app.use('/user', require('./routes/user-profile'));
 app.use('/api/websites', require('./routes/websites-page'));
+app.use('/api/homepage', require('./routes/homepage'));
 
 connectMongoDB().then((connection) => {
   console.log('Database connected.');

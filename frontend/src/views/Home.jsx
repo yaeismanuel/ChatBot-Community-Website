@@ -1,51 +1,45 @@
-import { useState, useEffect, useContext } from 'react';
+import { useEffect, useContext } from 'react';
 import { ContextData } from '../App';
-import { FaRegThumbsUp, FaThumbsUp } from "react-icons/fa";
+import { useFetch } from '../hooks/Requests';
 
 import defaultProfile from '../assets/defaultProfile.png';
 import Logo from '../assets/logo.jpg';
 
+// components
 import Header from '../components/Header';
 import Navbar from '../components/Navbar';
+import { DisplayAnnouncements } from '../components/DisplayAnnouncements';
 
 const Home = () => {
   const { setActive } = useContext(ContextData);
-  const [like, setLike] = useState({ status: false, count: 0 });
-  const likePost = () => {
-    setLike({ status: !like.status, count: !like.status ? like.count + 1 : like.count - 1 });
-  }
+  
+  const { loading, data, error, retry } = useFetch('/api/homepage');
   
   useEffect(() => {
     setActive({ announce: true })
-  }, [])
+  }, []);
+  
+  if (loading) return (
+    <div className="loaderContainer">
+      <div className="loader"></div>
+    </div>
+  );
+  
+  if (error) return (
+    <div className="errorContainer">
+      <div className="errorBox">
+        <p> Failed to fetch data.</p>
+        <button onClick={retry}>Retry</button>
+      </div>
+    </div>
+  );
+  
   return (
     <div className="container">
       <h2 className="h2">📢 Announcements</h2>
       <div className="contents">
         <div className="announceCards">
-          <div className="announceCard">
-            <div className="cardHead">
-              <div className="cardAuthor">
-                <div className="authorIcon" style={{ backgroundImage: `url("${defaultProfile}")`}}></div>
-                <div className="authorInfo">
-                  <p>Juan Dela Cruz</p>
-                  <span>Moderator</span>
-                </div>
-              </div>
-              <div className="date">
-                <p>25/10/2024</p>
-              </div>
-            </div>
-            <div className="cardBody">
-              <pre>
-                Hello everyone! we are happy to inform you that this website is now the official website for our community.
-              </pre>
-              <div className="actions" onClick={likePost}>
-                { like.status ? <FaThumbsUp /> : <FaRegThumbsUp /> }
-                <span>{ like.count }</span>
-              </div>
-            </div>
-          </div>
+          <DisplayAnnouncements announcements={data.response} />
         </div>
       </div>
     </div>

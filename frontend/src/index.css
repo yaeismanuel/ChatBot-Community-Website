@@ -51,7 +51,7 @@ main {
 .container .p{
   margin: 10px 0 5px;
 }
-.contents{
+.container .contents{
   margin: 1rem 0 0;
 }
 
@@ -242,18 +242,24 @@ header .mode{
   background: var(--softColor);
   box-shadow: 0 0 1.5px 0.2px var(--primary);
 }
-.menu .menuContents{
+.menu .menus{
   width: 100%;
   height: 100%;
-  position: relative;
-}
-.menuContents .visits{
+  display: grid;
+  grid-template-rows: 1fr max-content;
+}.menus .contents{
   width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+.menus .contents a{
+  
+}
+.menus .visits{
+  width: 100%;
+  padding: 1rem 0.5rem;
   text-align: center;
   font-size: 0.95rem;
-  position: absolute;
-  left: 0;
-  bottom: 0;
 }
 
 
@@ -322,7 +328,7 @@ nav .navActive{
   align-items: center;
   gap: 5px;
 }
-.cardAuthor .authorIcon{
+.cardAuthor .authorImg{
   width: 30px;
   aspect-ratio: 1/1;
   border-radius: 50%;
@@ -420,6 +426,7 @@ nav .navActive{
 /* About page styles */
 .about {
   padding: 0 0 5rem;
+  scroll-behavior: smooth;
 }
 .about h2{
   font-weight: 600;

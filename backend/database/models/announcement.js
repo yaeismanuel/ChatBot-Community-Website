@@ -12,12 +12,20 @@ const announceSchema = new mongoose.Schema({
   authorImg: {
     type: String,
   },
+  role: {
+    type: String,
+    required: true
+  },
   date: {
     type: String,
     required: true
   },
   likes: {
     type: Number,
+    required: true
+  },
+  liked: {
+    type: Boolean,
     required: true
   }
 }, { timestamps: true })

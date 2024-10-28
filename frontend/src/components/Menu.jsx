@@ -30,7 +30,14 @@ const Menu = () => {
           <FaXmark className="closeIcon" />
         </div>
       </div>
-      <div className="menuContents">
+      <div className="menus">
+        <ul className="contents">
+          <li>
+            <Link to="/about#stats">
+              Top Contributors
+            </Link>
+          </li>
+        </ul>
         <div className="visits">
           <p>Total Views: 1</p>
         </div>

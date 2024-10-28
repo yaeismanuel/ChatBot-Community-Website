@@ -25,7 +25,7 @@ const Websites = () => {
         <button onClick={retry}>Retry</button>
       </div>
     </div>
-  )
+  );
   
   return (
     <div className="container">

@@ -27,6 +27,7 @@ export const useFetch = (endpoint) => {
       if (d.success) {
         setData(d);
         setError(null);
+        setLoading(false);
       } else {
         throw new Error('Failed to fetch data.');
       }
