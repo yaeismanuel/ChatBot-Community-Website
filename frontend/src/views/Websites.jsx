@@ -21,7 +21,7 @@ const Websites = () => {
   if (error) return (
     <div className="errorContainer">
       <div className="errorBox">
-        <p> Failed to fetch data.</p>
+        <p> Failed to load websites.</p>
         <button onClick={retry}>Retry</button>
       </div>
     </div>

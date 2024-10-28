@@ -42,7 +42,7 @@ const resObject = require('../configs/response');
 const getAnnouncements = async (req, res) => {
   try {
     setTimeout(function() {
-      res.json(resObject(announcements));
+      res.json(resObject(announcements, true));
     }, 3000);
   } catch (e) {
     res.json(resObject(null, false, 'Failed to fetch websites.'));

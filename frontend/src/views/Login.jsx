@@ -24,10 +24,10 @@ const Login = () => {
   }, []);
   
   useEffect(() => {
-    if (data) {
+    if (data?.success) {
       setUserData(data.response);
       localStorage.setItem('token', data.response.token)
-  }
+    }
   }, [data]);
   
   return (
@@ -37,15 +37,15 @@ const Login = () => {
         <label>
           username:
           <input type="text" ref={usernameRef}/>
-          { error?.username && <p>{ error?.username }</p> }
+          { error?.username && <p>User not found.</p> }
         </label>
         <label>
           password:
           <input type="password" ref={passwordRef}/>
-          { error?.password && <p>{ error?.password }</p> }
+          { error?.password && <p>Incorrect password.</p> }
         </label>
         <button>{ loading ? 'Logging in...' : 'Login' }</button>
-        { error?.network && <p>{error.network}</p>}
+        { (error?.network || error?.server) && <p>Something went wrong.</p> }
       </form>
     </div>
   )

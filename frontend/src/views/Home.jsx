@@ -28,7 +28,7 @@ const Home = () => {
   if (error) return (
     <div className="errorContainer">
       <div className="errorBox">
-        <p> Failed to fetch data.</p>
+        <p> Failed to load announcements.</p>
         <button onClick={retry}>Retry</button>
       </div>
     </div>

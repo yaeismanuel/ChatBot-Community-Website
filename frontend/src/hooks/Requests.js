@@ -33,6 +33,7 @@ export const useFetch = (endpoint) => {
       }
     } catch (e) {
       if (e.code === 'ERR_CANCELED') return;
+      console.error(e);
       setError('Failed to fetch data.');
       setLoading(false);
     }

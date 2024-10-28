@@ -1,5 +1,5 @@
 const resObject = (data, success, message) => ({
-  success: success || true,
+  success: success,
   message: message || '',
   response: data,
   dev: 'CodeBuddy Solutions',

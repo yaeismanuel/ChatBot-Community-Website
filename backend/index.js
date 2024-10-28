@@ -7,9 +7,8 @@ const connectMongoDB = require('./database/connectMongoDB');
 
 const PORT = process.env.PORT || 5000;
 const app = express();
-const whitelist = ['http://localhost:5173', process.env.frontend]
 const corsOptions = {
-  origin: 'http://localhost:5173',
+  origin: process.env.FRONTEND || 'http://localhost:5173',
   credentials: true
 }
 
@@ -30,10 +29,12 @@ app.use('/user', require('./routes/user-profile'));
 app.use('/api/websites', require('./routes/websites-page'));
 app.use('/api/homepage', require('./routes/homepage'));
 
+// Database connection
 connectMongoDB().then((connection) => {
   console.log('Database connected.');
 }).catch((e) => console.log('Database connection error.'))
 
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}.`);
-  });
+// Start the server
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}.`);
+});
