@@ -1,38 +1,31 @@
 import { useState, useEffect, useContext, useRef } from 'react';
+import { useFetch } from '../hooks/Requests';
 import { ContextData } from '../App';
 import { DisplayWebsites } from '../components/DisplayWebsites';
-import { server } from '../config.json';
-import axios from 'axios';
 
 const Websites = () => {
   const { setActive } = useContext(ContextData);
   
-  const [loading, setLoading] = useState(true);
-  const [webList, setWebList] = useState([]);
-  const abortController = useRef(null);
-  
-  const fetchWebsites = async () => {
-    try {
-      if (abortController.current) abortController.current.abort();
-      abortController.current = new AbortController();
-      const { data } = await axios.get(`${server}/api/websites`, { signal: abortController.current.signal, withCredentials: true });
-      if (data) {
-        setWebList(data.websites);
-        setLoading(false);
-      }
-    } catch (e) {
-      if (e.code === 'ERR_CANCELED') return;
-      console.log(e);
-    }
-  }
+  const { loading, data, error, retry } = useFetch('/api/websites');
   
   useEffect(() => {
     setActive({ sites: true });
-    
-    fetchWebsites();
   }, []);
   
-  if (loading) return <div className="loaderContainer"><div className="loader"></div></div>
+  if (loading) return (
+    <div className="loaderContainer">
+      <div className="loader"></div>
+    </div>
+  );
+  
+  if (error) return (
+    <div className="errorContainer">
+      <div className="errorBox">
+        <p> Failed to fetch data.</p>
+        <button onClick={retry}>Retry</button>
+      </div>
+    </div>
+  )
   
   return (
     <div className="container">
@@ -42,7 +35,7 @@ const Websites = () => {
         <h3>List of Websites:</h3>
         <ol>
           {
-            webList.map((web, id) => (
+            data.response.map((web, id) => (
               <li key={ id + 1 }>
                 <a href={`#${ id + 1 }`}>{ web.name }</a>
               </li>
@@ -51,7 +44,7 @@ const Websites = () => {
         </ol>
       </div>
       <div className="websites">
-        <DisplayWebsites websites={ webList } />
+        <DisplayWebsites websites={ data.response } />
       </div>
     </div>
   )

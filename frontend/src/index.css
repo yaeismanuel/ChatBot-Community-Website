@@ -13,7 +13,7 @@
 /* Root colors */
 :root {
   --bg: #FFFFFF;
-  --softColor: #ffffff;
+  --softColor: #fbfbfbff;
   --darkColor: #EDEEEB;
   --textColor: #31393C;
   --primary: #3E96F4;
@@ -69,8 +69,13 @@ main {
   align-items: center;
   gap: 10px;
 }
+.login form p{
+  font-size: 0.85rem;
+  color: red;
+}
 .login label{
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   gap: 5px;
@@ -118,6 +123,28 @@ main {
 }
 @keyframes l4 { 
   100%{transform: rotate(1turn)}
+}
+
+/* Error container styles */
+.errorContainer{
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+.errorBox{
+  text-align: center;
+}
+.errorBox button{
+  margin: 5px 0 0;
+  padding: 0.3rem 1rem;
+  border: 1px solid var(--primary);
+  border-radius: 5px;
+  background: var(--softColor);
 }
 
 /* Header styles */
@@ -299,7 +326,10 @@ nav .navActive{
   width: 30px;
   aspect-ratio: 1/1;
   border-radius: 50%;
+  border: 2px solid  var(--primary);
   background: var(--primary);
+  background-size: cover;
+  background-position: center;
 }
 .cardAuthor .authorInfo{
   display: flex;
@@ -384,6 +414,95 @@ nav .navActive{
   margin: 0.5rem 0 0;
   display: flex;
   gap: 10px;
+}
+
+
+/* About page styles */
+.about {
+  padding: 0 0 5rem;
+}
+.about h2{
+  font-weight: 600;
+  text-align: center;
+}
+.about .communityInfo{
+  padding: 1rem;
+}
+.communityInfo .imageCover{
+  width: 100%;
+  aspect-ratio: 1/0.3;
+  max-height: 150px;
+  background: var(--darkColor);
+}
+.communityInfo .description{
+  margin: 8px 0;
+}
+.description p span{
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+.communityInfo .fbGroup{
+  margin: 0.5rem 0;
+}
+.fbGroup p{
+  padding: 0.5rem 0 0;
+}
+.fbGroup span{
+  font-weight: 600;
+}
+.fbGroup div{
+  margin: 0.5rem 0;
+}
+.fbGroup div p{
+  font-weight: 600;
+  padding: 0;
+}
+.fbGroup ul{
+  padding: 0 2rem;
+}
+.about .management{
+  padding: 2rem;
+  border-radius: 15px;
+  background: var(--darkColor);
+}
+.about .stats{
+  padding: 3rem 2rem 2rem;
+}
+.about .stats p{
+  text-align: center;
+  padding: 0.2rem 0;
+}
+.management .admins, .stats .contributors{
+  width: 100%;
+  margin: 1rem 0;
+  border-radius: 5px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.7rem;
+}
+.admins .admin, .contributors .contributor{
+  padding: 0.8rem;
+  border-radius: 5px;
+  background: var(--softColor);
+}
+.contributors .contributor{
+  background: var(--darkColor);
+}
+.admin .userImg, .contributor .userImg{
+  width: 100%;
+  aspect-ratio: 1/1;
+  border: 1px solid var(--darkColor);
+  border-radius: 5px;
+}
+.contributor .userImg{
+  border: 1px solid var(--softColor);
+}
+.admin .info, .contributor .info{
+  text-align: center;
+}
+.admin .info span, .contributor .info span{
+  font-size: 0.9rem;
 }
 
 @media screen and (min-width: 900px) {

@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import { ContextData } from '../App';
 import { FaRegThumbsUp, FaThumbsUp } from "react-icons/fa";
 
+import defaultProfile from '../assets/defaultProfile.png';
 import Logo from '../assets/logo.jpg';
 
 import Header from '../components/Header';
@@ -25,7 +26,7 @@ const Home = () => {
           <div className="announceCard">
             <div className="cardHead">
               <div className="cardAuthor">
-                <div className="authorIcon"></div>
+                <div className="authorIcon" style={{ backgroundImage: `url("${defaultProfile}")`}}></div>
                 <div className="authorInfo">
                   <p>Juan Dela Cruz</p>
                   <span>Moderator</span>

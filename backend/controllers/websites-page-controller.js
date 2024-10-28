@@ -41,15 +41,15 @@ const websites = [
   }
 ]
 
+const resObject = require('../configs/response');
 
 const getWebsites = async (req, res) => {
   try {
     setTimeout(function() {
-      res.cookie('jwt', 'token', { httpOnly: true, secure: true, maxAge: 60000 * 1000, sameSite: 'none', path: '/' });
-      res.json({ websites });
+      res.json(resObject(websites, true));
     }, 3000);
   } catch (e) {
-    res.status(500).send('Error');
+    res.json(resObject(null, false, 'Failed to fetch websites.'));
     console.log(e);
   }
 }

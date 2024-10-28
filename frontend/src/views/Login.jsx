@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useContext } from 'react';
 import { ContextData } from '../App';
-import { server } from '../config.json';
+import { usePost } from '../hooks/Requests';
 import axios from 'axios';
 
 const Login = () => {
@@ -8,19 +8,28 @@ const Login = () => {
   const usernameRef = useRef(null);
   const passwordRef = useRef(null);
   
+  const { loading, data, error, postData } = usePost('/login');
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     const credentials = {
       username: usernameRef.current.value.trim(),
       password: passwordRef.current.value.trim(),
     }
-    const { data } = await axios.post(`${server}/login`, credentials);
-    setUserData(data.response)
-    console.log(data);
+    await postData(credentials);
   }
+  
   useEffect(() => {
     setActive({});
-  }, [])
+  }, []);
+  
+  useEffect(() => {
+    if (data) {
+      setUserData(data.response);
+      localStorage.setItem('token', data.response.token)
+  }
+  }, [data]);
+  
   return (
     <div className="login">
       <form onSubmit={handleSubmit}>
@@ -28,12 +37,15 @@ const Login = () => {
         <label>
           username:
           <input type="text" ref={usernameRef}/>
+          { error?.username && <p>{ error?.username }</p> }
         </label>
         <label>
           password:
           <input type="password" ref={passwordRef}/>
+          { error?.password && <p>{ error?.password }</p> }
         </label>
-        <button>Login</button>
+        <button>{ loading ? 'Logging in...' : 'Login' }</button>
+        { error?.network && <p>{error.network}</p>}
       </form>
     </div>
   )

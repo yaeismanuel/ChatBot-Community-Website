@@ -1,4 +1,5 @@
-import { useState, createContext } from 'react';
+import { useState, createContext, useEffect } from 'react';
+import { useFetch } from './hooks/Requests';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 // pages
@@ -30,6 +31,12 @@ function App() {
     userData,
     setUserData
   }
+  
+  const { data } = useFetch('/user');
+  
+  useEffect(() => {
+    if (data) setUserData(data.response);
+  }, [data])
   
   return (
     <ContextData.Provider value={contextValue}>

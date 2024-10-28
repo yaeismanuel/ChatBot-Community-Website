@@ -1,7 +1,6 @@
 import Logo from '../assets/logo.jpg';
 
 export const DisplayWebsites = ({ websites }) => {
-  
   return (
     <>
       { 
