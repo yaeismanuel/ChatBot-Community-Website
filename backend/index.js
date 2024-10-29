@@ -10,7 +10,7 @@ const app = express();
 const origin = process.env.FRONTEND || 'http://localhost:5173';
 
 // middlewares
-app.use(cors());
+app.use(cors({ origin }));
 app.use(cookieParser());
 app.use(express.json());
 app.use(authenticate);

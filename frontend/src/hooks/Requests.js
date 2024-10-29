@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
-import { server } from '../config.json';
+import { server, dev, production } from '../config.json';
 import axios from 'axios';
 
-const baseUrl = 'http://localhost:5000';
+const baseUrl = production ? server : dev;
 
 export const useFetch = (endpoint) => {
   const [loading, setLoading] = useState(true);

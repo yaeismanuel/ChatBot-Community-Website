@@ -1,4 +1,5 @@
 {
+  "production": true,
   "dev": "http://localhost:5000",
   "server": "https://chatbot-community-server.onrender.com"
 }
