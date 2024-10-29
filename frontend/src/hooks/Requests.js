@@ -3,7 +3,6 @@ import { server, dev, production } from '../config.json';
 import axios from 'axios';
 
 const baseUrl = production ? server : dev;
-console.log(baseUrl, production);
 
 export const useFetch = (endpoint) => {
   const [loading, setLoading] = useState(true);
@@ -16,6 +15,7 @@ export const useFetch = (endpoint) => {
       if (abortController.current) abortController.current.abort();
       abortController.current = new AbortController();
       setLoading(true);
+      console.log(baseUrl, production);
       
       const token = localStorage.getItem('token');
       const { data: d } = await axios.get(`${baseUrl + endpoint}`, {
