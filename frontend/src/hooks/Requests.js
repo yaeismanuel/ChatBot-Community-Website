@@ -3,6 +3,7 @@ import { server, dev, production } from '../config.json';
 import axios from 'axios';
 
 const baseUrl = production ? server : dev;
+console.log(baseUrl, production);
 
 export const useFetch = (endpoint) => {
   const [loading, setLoading] = useState(true);
