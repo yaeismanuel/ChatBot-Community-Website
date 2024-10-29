@@ -7,13 +7,10 @@ const connectMongoDB = require('./database/connectMongoDB');
 
 const PORT = process.env.PORT || 5000;
 const app = express();
-const corsOptions = {
-  origin: process.env.FRONTEND || 'http://localhost:5173',
-  credentials: true
-}
+const origin = process.env.FRONTEND || 'http://localhost:5173';
 
 // middlewares
-app.use(cors(corsOptions));
+app.use(cors({ origin }));
 app.use(cookieParser());
 app.use(express.json());
 app.use(authenticate);
@@ -37,4 +34,5 @@ connectMongoDB().then((connection) => {
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}.`);
+  console.log(`Frontend: ${origin}`);
 });
