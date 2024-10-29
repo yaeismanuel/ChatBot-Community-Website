@@ -40,7 +40,7 @@ function App() {
   
   return (
     <ContextData.Provider value={contextValue}>
-      <main>
+      <main className="app">
         <Router>
           <Header />
           <Menu />
