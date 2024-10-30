@@ -15,7 +15,6 @@ export const useFetch = (endpoint) => {
       if (abortController.current) abortController.current.abort();
       abortController.current = new AbortController();
       setLoading(true);
-      console.log(baseUrl, production);
       
       const token = localStorage.getItem('token');
       const { data: d } = await axios.get(`${baseUrl + endpoint}`, {

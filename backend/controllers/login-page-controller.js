@@ -28,7 +28,7 @@ const login = async (req, res) => {
       bcrypt.compare(password, found.password, async (err, isCorrect) => {
         if (err) {
           console.log(err);
-          res.json(resObject({ error: { server: true }}, false, e.message));
+          res.json(resObject({ server: true }, false, e.message));
         };
         
         if (isCorrect) {
@@ -37,15 +37,15 @@ const login = async (req, res) => {
           res.cookie('jwt', token, { httpOnly: true, maxAge: 60000 * 1000, sameSite: 'none' });
           res.json(resObject({ ...userData, token }, true, 'Logged In.'));
         } else {
-          res.json(resObject({ error: { password: true }}, false, e.message));
+          res.json(resObject({ password: true }, false));
         }
       })
     } else {
-      res.json(resObject({ error: { username: true }}, false, e.message));
+      res.json(resObject({ username: true }, false));
     }
   } catch (e) {
     console.log(e);
-    res.json(resObject({ error: { network: true }}, false, e.message));
+    res.json(resObject({ network: true }, false, e.message));
   }
 }
 

@@ -14,7 +14,6 @@ const websiteSchema = new mongoose.Schema({
   },
   thumbnail: {
     type: String,
-    required: true
   },
   developer: {
     type: String,
@@ -26,7 +25,6 @@ const websiteSchema = new mongoose.Schema({
   },
   devFbLink: {
     type: String,
-    required: true
   },
 }, { timestamps: true });
 

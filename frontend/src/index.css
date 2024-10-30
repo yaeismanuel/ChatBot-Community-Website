@@ -194,10 +194,11 @@ header .mode{
 }
 .menu .profile{
   width: 100%;
-  padding: 1rem 0.5rem 0.5rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  padding: 1rem 0.4rem 0.5rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-auto-rows: max-content;
+  place-items: center;
   position: relative;
   background: var(--darkColor);
   box-shadow: 0 0 5px rgba(0,0,0,0.2);
@@ -217,7 +218,7 @@ header .mode{
   opacity: 0.6;
 }
 .profile .profilePic{
-  width: 60px;
+  width: 55px;
   aspect-ratio: 1/1;
   border-radius: 50%;
   border: 2px solid var(--primary);
@@ -249,11 +250,21 @@ header .mode{
   grid-template-rows: 1fr max-content;
 }.menus .contents{
   width: 100%;
-  display: flex;
-  flex-wrap: wrap;
 }
-.menus .contents a{
-  
+.contents li{
+  width: 100%;
+  height: max-content;
+  border-bottom: 1px solid var(--darkColor);
+  list-style: none;
+}
+.contents li a{
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.contents li .plusIcon{
+  color: var(--textColor);
 }
 .menus .visits{
   width: 100%;
@@ -353,6 +364,10 @@ nav .navActive{
 }
 .announceCard .cardBody{
   padding: 0.5rem 1rem;
+}
+.cardBody .announceId{
+  height: 0;
+  visibility: hidden;
 }
 .cardBody pre{
   white-space: pre-wrap;

@@ -1,6 +1,6 @@
 import { useEffect, useContext } from 'react';
 import { ContextData } from '../App';
-import { useFetch } from '../hooks/Requests';
+import { useFetch, usePost } from '../hooks/Requests';
 
 import defaultProfile from '../assets/defaultProfile.png';
 import Logo from '../assets/logo.jpg';
@@ -39,7 +39,7 @@ const Home = () => {
       <h2 className="h2">📢 Announcements</h2>
       <div className="contents">
         <div className="announceCards">
-          <DisplayAnnouncements announcements={data.response} />
+          <DisplayAnnouncements announcements={data.response} refetch={retry}/>
         </div>
       </div>
     </div>

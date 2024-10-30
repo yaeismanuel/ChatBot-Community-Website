@@ -26,8 +26,10 @@ const announceSchema = new mongoose.Schema({
   },
   liked: {
     type: Boolean,
-    required: true
-  }
+    required: true,
+    default: false
+  },
+  whoLiked: [Number],
 }, { timestamps: true })
 
 module.exports = mongoose.model('announcement', announceSchema);

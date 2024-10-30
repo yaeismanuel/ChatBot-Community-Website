@@ -10,13 +10,13 @@ const Login = () => {
   
   const { loading, data, error, postData } = usePost('/login');
   
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const credentials = {
       username: usernameRef.current.value.trim(),
       password: passwordRef.current.value.trim(),
     }
-    await postData(credentials);
+    postData(credentials);
   }
   
   useEffect(() => {
@@ -28,6 +28,7 @@ const Login = () => {
       setUserData(data.response);
       localStorage.setItem('token', data.response.token)
     }
+    console.log("eff");
   }, [data]);
   
   return (
