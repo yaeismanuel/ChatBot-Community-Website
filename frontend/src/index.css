@@ -501,96 +501,85 @@ nav .navActive{
 
 
 /* About page styles */
-.about {
-  padding: 0 0 5rem;
-  scroll-behavior: smooth;
-}
-.about h2{
-  font-weight: 600;
-  text-align: center;
-}
-.about .communityInfo{
-  padding: 1rem;
-}
-.communityInfo .imageCover{
-  width: 100%;
-  aspect-ratio: 1/0.3;
-  max-height: 150px;
-  background: var(--darkColor);
-}
-.communityInfo .description{
-  margin: 8px 0;
-}
-.description p span{
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--primary);
-}
-.communityInfo .fbGroup{
-  margin: 0.5rem 0;
-}
-.fbGroup p{
-  padding: 0.5rem 0 0;
-}
-.fbGroup span{
-  font-weight: 600;
-}
-.fbGroup div{
-  margin: 0.5rem 0;
-}
-.fbGroup div p{
-  font-weight: 600;
-  padding: 0;
-}
-.fbGroup ul{
-  padding: 0 2rem;
-}
-.about .management{
-  padding: 2rem;
-  border-radius: 15px;
-  background: var(--darkColor);
-}
-.about .stats{
-  padding: 3rem 2rem 2rem;
-}
-.about .stats p{
-  text-align: center;
-  padding: 0.2rem 0;
-}
-.management .admins, .stats .contributors{
-  width: 100%;
-  margin: 1rem 0;
-  border-radius: 5px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 0.7rem;
-}
-.admins .admin, .contributors .contributor{
-  padding: 0.8rem;
-  border-radius: 5px;
-  background: var(--softColor);
-}
-.contributors .contributor{
-  background: var(--darkColor);
-}
-.admin .userImg, .contributor .userImg{
-  width: 100%;
-  aspect-ratio: 1/1;
-  border: 1px solid var(--darkColor);
-  border-radius: 5px;
-}
-.contributor .userImg{
-  border: 1px solid var(--softColor);
-}
-.admin .info, .contributor .info{
-  text-align: center;
-}
-.admin .info span, .contributor .info span{
-  font-size: 0.9rem;
+.about-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
 }
 
-@media screen and (min-width: 900px) {
-  .container{
-    padding: 2.5% 20%;
+.community-info {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 40px;
+  animation: fadeIn 1s ease-in;
+}
+
+.image-cover {
+  background-image: url('../assets/community-bg.jpg');
+  height: 200px;
+  background-size: cover;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.description {
+  font-size: 1.1em;
+}
+
+.highlight {
+  color: #007bff;
+  font-weight: bold;
+}
+
+.fb-group, .management, .stats {
+  margin-bottom: 40px;
+}
+
+.label {
+  font-weight: bold;
+}
+
+.main-group, .alternative-groups {
+  margin: 10px 0;
+}
+
+.admins, .contributors {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.admin, .contributor {
+  display: flex;
+  align-items: center;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  transition: transform 0.3s;
+}
+
+.admin:hover, .contributor:hover {
+  transform: scale(1.05);
+}
+
+.user-img {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
