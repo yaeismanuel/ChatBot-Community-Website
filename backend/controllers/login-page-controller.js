@@ -33,7 +33,6 @@ const login = async (req, res) => {
         
         if (isCorrect) {
           const token = await createToken(userData.id);
-          console.log('token', token);
           res.cookie('jwt', token, { httpOnly: true, maxAge: 60000 * 1000, sameSite: 'none' });
           res.json(resObject({ ...userData, token }, true, 'Logged In.'));
         } else {
@@ -51,21 +50,19 @@ const login = async (req, res) => {
 
 const signup = async (req, res) => {
   try {
-    const data = {
-      id: await genId(),
-      name: 'Juan Tamad',
-      username: 'juantamad',
-      password: '123',
-      role: 'member'
-    }
+    const newUserData = req.body;
+    newUserData.id = await genId();
     bcrypt.genSalt(10, (error, salt) => {
       if (error) throw new Error(error);
-      bcrypt.hash(data.password, salt, async (err, hash) => {
+      bcrypt.hash(newUserData.password, salt, async (err, hash) => {
         try {
           if (err) throw new Error(err);
           data.password = hash;
-          const newUser = await userModel.create(data);
-          console.log(newUser);
+          const newUser = await userModel.create(newUserData);
+          
+          const token = await createToken(newUser.id);
+          res.cookie('jwt', token, { httpOnly: true, maxAge: 60000 * 1000, sameSite: 'none' });
+          res.json(resObject({ ...newUser, token }, true, 'Signed In.'));
         } catch (e) {
           res.status(500);
           console.log(e);

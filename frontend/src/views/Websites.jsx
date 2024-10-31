@@ -32,7 +32,7 @@ const Websites = () => {
       <h2 className="h2">🌐 Websites</h2>
       <p className="p">Explore the different websites created by our fellow community members and management.</p>
       <div className="tableContents">
-        <h3>List of Websites:</h3>
+        { data.response.length === 0 ? <p className="nodata">No data.</p> : <h3>List of Websites:</h3> }
         <ol>
           {
             data.response.map((web, id) => (

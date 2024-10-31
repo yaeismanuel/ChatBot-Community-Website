@@ -16,7 +16,7 @@ export const DisplayWebsites = ({ websites }) => {
             <div className="webInfo">
               <div>
                 <strong>Developer: </strong>
-                <span>{ web.dev }</span>
+                <span>{ web.developer }</span>
               </div>
               <div>
                 <strong>FB Account: </strong>

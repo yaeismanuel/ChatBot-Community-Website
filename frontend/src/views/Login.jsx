@@ -1,12 +1,15 @@
 import { useState, useEffect, useRef, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ContextData } from '../App';
 import { usePost } from '../hooks/Requests';
 import axios from 'axios';
 
 const Login = () => {
   const { setUserData, setActive } = useContext(ContextData);
+  const navigate = useNavigate();
   const usernameRef = useRef(null);
   const passwordRef = useRef(null);
+  const [loggedIn, setLoggedIn] = useState(false);
   
   const { loading, data, error, postData } = usePost('/login');
   
@@ -26,9 +29,9 @@ const Login = () => {
   useEffect(() => {
     if (data?.success) {
       setUserData(data.response);
-      localStorage.setItem('token', data.response.token)
+      localStorage.setItem('token', data.response.token);
+      navigate('/');
     }
-    console.log("eff");
   }, [data]);
   
   return (

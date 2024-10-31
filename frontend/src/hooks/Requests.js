@@ -10,6 +10,7 @@ export const useFetch = (endpoint) => {
   const [data, setData] = useState(null);
   const abortController = useRef(null);
   
+  const editData = (newdata) => setData(newdata);
   const fetchData = async () => {
     try {
       if (abortController.current) abortController.current.abort();
@@ -49,7 +50,8 @@ export const useFetch = (endpoint) => {
     loading, 
     data, 
     error, 
-    retry 
+    retry,
+    editData
   }
 }
 
@@ -59,6 +61,7 @@ export const usePost = (endpoint) => {
   const [data, setData] = useState(null);
   const abortController = useRef(null);
   
+  const editData = (newdata) => setData(newdata);
   const postData = async (postdata) => {
     try {
       if (abortController.current) abortController.current.abort();
@@ -90,10 +93,12 @@ export const usePost = (endpoint) => {
     }
   }
   
+  
   return { 
     loading,
     data,
     error,
-    postData
+    postData,
+    editData
   }
 }

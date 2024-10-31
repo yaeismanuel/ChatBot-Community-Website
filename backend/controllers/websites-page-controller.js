@@ -1,6 +1,6 @@
 const webList = [
   {
-    name: 'CodeBuddy Solutions Official',
+    name: '',
     description: 'Consequat est est consequat consectetur deserunt nulla sunt irure. Adipisicing voluptate magna nisi consequat aute.',
     link: 'https://codebuddysltns.verahost.ph',
     dev: 'renzdev',
@@ -46,6 +46,7 @@ const resObject = require('../configs/response');
 
 const getWebsites = async (req, res) => {
   try {
+    // https://i.imgur.com/cEyUa2g.jpeg
     const websites = await websiteModel.find({});
     res.json(resObject(websites, true));
   } catch (e) {
@@ -56,11 +57,20 @@ const getWebsites = async (req, res) => {
 
 const addWebsite = async (req, res) => {
   try {
+    const testdata = {
+      name: 'CodeBuddy Solutions Official',
+      description: 'Consequat est est consequat consectetur deserunt nulla sunt irure. Adipisicing voluptate magna nisi consequat aute.',
+      link: 'https://codebuddysltns.verahost.ph',
+      thumbnail: 'https://i.imgur.com/cEyUa2g.jpeg',
+      developer: 'renzdev',
+      devFb: '@bosscleo3233',
+    }
+    
     const web = req.body;
     
-    if (!web.name || !web.link || !web.developer || !web.devFb) return res.json(resObject(null, false, 'Name, link, developer, and devFb of the website are mandatory.'));
+    // if (!web.name || !web.link || !web.developer || !web.devFb) return res.json(resObject(null, false, 'Name, link, developer, and devFb of the website are mandatory.'));
     
-    const websites = await websiteModel.create(web);
+    const websites = await websiteModel.create(testdata);
     res.json(resObject({ name: websites.name }, true));
   } catch (e) {
     res.json(resObject(null, false, 'Failed to add website.'));
@@ -69,5 +79,6 @@ const addWebsite = async (req, res) => {
 }
 
 module.exports = {
-  getWebsites
+  getWebsites,
+  addWebsite
 }

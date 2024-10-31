@@ -29,6 +29,34 @@
   --transBg: #3636367e;
 }
 
+.popupBox{
+  width: 15rem;
+  height: 0;
+  border-radius: 5px;
+  position: absolute;
+  top: 5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--darkColor);
+  overflow: hidden;
+  transition: 0.6s;
+}
+.popupBox .boxContents{
+  padding: 1rem;
+  position: relative;
+}
+.popupBox .close{
+  width: 28px;
+  font-size: 1.2rem;
+  padding: 2px;
+  display: flex;
+  justify-content: center;
+  color: var(--textColor);
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
 body {
   background: var(--bg);
 }
@@ -54,6 +82,7 @@ body {
 .container .contents{
   margin: 1rem 0 0;
 }
+
 
 /* Login styles */
 .login{
@@ -395,6 +424,9 @@ nav .navActive{
 /* Websites page styles */
 .tableContents{
   margin: 0.5rem 0;
+}
+.tableContents .nodata{
+  text-align: center;
 }
 .tableContents li{
   margin: 0.5rem 2rem;

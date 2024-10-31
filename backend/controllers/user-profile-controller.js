@@ -12,7 +12,6 @@ const getUserInfo = async (req, res) => {
         role: user.role,
       }
     res.json(resObject(userData, true, 'User found.'));
-    console.log(userData);
   } catch (e) {
     console.log(e);
     res.json(resObject(null, false, 'User ID from token not found.'));

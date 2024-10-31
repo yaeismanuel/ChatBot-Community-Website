@@ -23,6 +23,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  liked: [String]
 }, { timestamps: true });
 
 const model = mongoose.model('user', userSchema);

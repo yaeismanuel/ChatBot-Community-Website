@@ -17,8 +17,6 @@ const resObject = require('../configs/response');
 
 const getAnnouncements = async (req, res) => {
   try {
-    const test = await announceModel.find({});
-    console.log(test);
     const announcements = await announceModel.find({});
     res.json(resObject(announcements, true));
   } catch (e) {
@@ -46,20 +44,15 @@ const likeAnnounce = async (req, res) => {
     const { userId } = res.locals;
     
     if (!userId) return res.json(resObject({ 
-      error: { 
         authError: true,
         message: 'Not logged in.'
-      }
-    }, false));
+      }, false));
     
     if (!filter._id) return res.json(resObject({ 
-      error: {
         message: 'Id of announcement is mandatory.'
-      }
-    }, false));
+      }, false));
     
     const announce = await announceModel.findOne(filter);
-    console.log(announce.whoLiked.includes(userId), announce.whoLiked.filter((a) => a !== userId));
     
     if (announce.whoLiked.includes(userId)) {
       const update = await announceModel.findOneAndUpdate(filter, { 

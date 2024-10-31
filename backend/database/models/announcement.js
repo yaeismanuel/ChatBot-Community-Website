@@ -24,11 +24,6 @@ const announceSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
-  liked: {
-    type: Boolean,
-    required: true,
-    default: false
-  },
   whoLiked: [Number],
 }, { timestamps: true })
 
