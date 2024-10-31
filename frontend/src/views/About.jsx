@@ -6,128 +6,70 @@ const About = () => {
   const { setActive } = useContext(ContextData);
   
   useEffect(() => {
-    setActive({ about: true })
-  }, [])
+    setActive({ about: true });
+  }, []);
+
   return (
-    <div className="container about">
-      <div className="communityInfo">
-        <div className="imageCover"></div>
+    <div className="about-container">
+      <div className="community-info">
+        <div className="image-cover" />
         <div className="description">
-          <p><span>ChatBot Community</span> is a veniam cillum fugiat id eu id commodo do laborum consequat ad. Excepteur elit cillum non anim laboris. Esse culpa esse dolore velit veniam aute officia amet reprehenderit nisi. Non duis pariatur enim tempor enim ullamco consectetur minim consequat labore adipisicing sint. Aliqua duis irure nulla aliquip esse ad anim pariatur proident elit voluptate. Deserunt anim aute consectetur ipsum.</p>
+          <p>
+            <span className="highlight">ChatBot Community</span> is a vibrant community where you can explore, learn, and share insights. Our mission is to foster collaboration and innovation. Join us for exciting discussions and opportunities!
+          </p>
         </div>
-        <div className="fbGroup">
-          <p><span>Management:</span> 15</p>
-          <p><span>Members:</span> 12,429</p>
-          <div className="main">
+        <div className="fb-group">
+          <p><span className="label">Management:</span> 15</p>
+          <p><span className="label">Members:</span> 12,429</p>
+          <div className="main-group">
             <p>Main Group:</p>
             <ul>
-              <li>
-                <a href="https://facebook.com/main">https://facebook.com/main</a>
-              </li>
+              <li><a href="https://facebook.com/main">facebook.com/main</a></li>
             </ul>
           </div>
-          <div className="alternatives">
+          <div className="alternative-groups">
             <p>Alternative Groups:</p>
             <ul>
-              <li>
-                <a href="#">https://facebook.com/alternative</a>
-              </li>
-              <li>
-                <a href="#">https://facebook.com/alternative</a>
-              </li>
-              <li>
-                <a href="#">https://facebook.com/alternative</a>
-              </li>
+              <li><a href="#">facebook.com/alternative1</a></li>
+              <li><a href="#">facebook.com/alternative2</a></li>
+              <li><a href="#">facebook.com/alternative3</a></li>
             </ul>
           </div>
         </div>
       </div>
+
       <div className="management">
         <h2>Management</h2>
         <div className="admins">
-          <div className="admin">
-            <img src={defaultProfile} className="userImg" />
-            <div className="info">
-              <p>Juan Dela Cruz</p>
-              <span>Admin</span>
+          {Array.from({ length: 5 }).map((_, index) => (
+            <div className="admin" key={index}>
+              <img src={defaultProfile} className="user-img" alt="Admin" />
+              <div className="info">
+                <p>Juan Dela Cruz</p>
+                <span>Admin</span>
+              </div>
             </div>
-          </div>
-          <div className="admin">
-            <img src={defaultProfile} className="userImg" />
-            <div className="info">
-              <p>Juan Dela Cruz</p>
-              <span>Admin</span>
-            </div>
-          </div>
-          <div className="admin">
-            <img src={defaultProfile} className="userImg" />
-            <div className="info">
-              <p>Juan Dela Cruz</p>
-              <span>Admin</span>
-            </div>
-          </div>
-          <div className="admin">
-            <img src={defaultProfile} className="userImg" />
-            <div className="info">
-              <p>Juan Dela Cruz</p>
-              <span>Admin</span>
-            </div>
-          </div>
-          <div className="admin">
-            <img src={defaultProfile} className="userImg" />
-            <div className="info">
-              <p>Juan Dela Cruz</p>
-              <span>Admin</span>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
+
       <div className="stats" id="stats">
         <h2>Top Contributors</h2>
-        <p>As of June 36, 1997</p>
+        <p>As of October 31, 2024</p>
         <div className="contributors">
-          <div className="contributor">
-            <img src={defaultProfile} className="userImg" />
-            <div className="info">
-              <p>Juan Dela Cruz</p>
-              <span>2828824 points</span>
+          {Array.from({ length: 5 }).map((_, index) => (
+            <div className="contributor" key={index}>
+              <img src={defaultProfile} className="user-img" alt="Contributor" />
+              <div className="info">
+                <p>Juan Dela Cruz</p>
+                <span>2,828,824 points</span>
+              </div>
             </div>
-          </div>
-          <div className="contributor">
-            <img src={defaultProfile} className="userImg" />
-            <div className="info">
-              <p>Juan Dela Cruz</p>
-              <span>2828824 points</span>
-            </div>
-          </div>
-          <div className="contributor">
-            <img src={defaultProfile} className="userImg" />
-            <div className="info">
-              <p>Juan Dela Cruz</p>
-              <span>2828824 points</span>
-            </div>
-          </div>
-          <div className="contributor">
-            <img src={defaultProfile} className="userImg" />
-            <div className="info">
-              <p>Juan Dela Cruz</p>
-              <span>2828824 points</span>
-            </div>
-          </div>
-          <div className="contributor">
-            <img src={defaultProfile} className="userImg" />
-            <div className="info">
-              <p>Juan Dela Cruz</p>
-              <span>2828824 points</span>
-            </div>
-          </div>
-        </div>
-        <div className="moderators">
-          
+          ))}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default About
+export default About;
