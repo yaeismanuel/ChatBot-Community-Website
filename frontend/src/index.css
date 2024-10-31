@@ -501,11 +501,18 @@ nav .navActive{
 
 
 /* About page styles */
-.about-body {
-  padding: 20px;
-  font-family: 'Arial', sans-serif;
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-y: auto; 
   background-color: #181818;
   color: #e0e0e0;
+}
+
+.about-body {
+  padding: 20px;
+  min-height: 100vh; 
 }
 
 .community-info {
