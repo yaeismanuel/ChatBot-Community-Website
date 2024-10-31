@@ -508,6 +508,8 @@ nav .navActive{
   font-family: 'Arial', sans-serif;
   background-color: #181818;
   color: #e0e0e0;
+  overflow: auto; /* Enable scrolling */
+  max-height: 100vh; /* Set max height for scrolling */
 }
 
 .community-info {
@@ -551,6 +553,8 @@ nav .navActive{
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
+  max-height: 200px; /* Set max height for scrollable area */
+  overflow-y: auto; /* Enable vertical scrolling */
 }
 
 .admin, .contributor {
