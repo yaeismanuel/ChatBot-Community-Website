@@ -10,7 +10,7 @@ const About = () => {
   }, []);
 
   return (
-    <div className="about-container">
+    <div className="about-body">
       <div className="community-info">
         <div className="image-cover" />
         <div className="description">
