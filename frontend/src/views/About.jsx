@@ -1,24 +1,16 @@
-import { useEffect, useContext, useState } from 'react';
+import { useEffect, useContext } from 'react';
 import { ContextData } from '../App';
 import defaultProfile from '../assets/defaultProfile.png';
 
 const About = () => {
   const { setActive } = useContext(ContextData);
-  const [isDarkMode, setIsDarkMode] = useState(true);
 
   useEffect(() => {
     setActive({ about: true });
   }, []);
 
-  const toggleTheme = () => {
-    setIsDarkMode(prevMode => !prevMode);
-  };
-
   return (
-    <div className={`about-body ${isDarkMode ? 'dark' : 'light'}`}>
-      <button className="theme-toggle" onClick={toggleTheme}>
-        Toggle to {isDarkMode ? 'Light' : 'Dark'} Mode
-      </button>
+    <div className="about-body">
       <div className="community-info">
         <div className="image-cover" />
         <div className="description">
