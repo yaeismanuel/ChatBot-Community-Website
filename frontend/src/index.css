@@ -506,6 +506,7 @@ nav .navActive{
   margin: auto;
   padding: 20px;
   font-family: 'Arial', sans-serif;
+  background-color: #f9f9f9;
 }
 
 .community-info {
@@ -519,6 +520,7 @@ nav .navActive{
   background-image: url('../assets/community-bg.jpg');
   height: 200px;
   background-size: cover;
+  background-position: center;
   border-radius: 8px;
   margin-bottom: 20px;
 }
@@ -547,6 +549,7 @@ nav .navActive{
 .admins, .contributors {
   display: flex;
   flex-wrap: wrap;
+  gap: 15px;
 }
 
 .admin, .contributor {
@@ -557,6 +560,7 @@ nav .navActive{
   border: 1px solid #ddd;
   border-radius: 8px;
   transition: transform 0.3s;
+  background-color: #fff;
 }
 
 .admin:hover, .contributor:hover {
