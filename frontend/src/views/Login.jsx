@@ -9,8 +9,6 @@ const Login = () => {
   const navigate = useNavigate();
   const usernameRef = useRef(null);
   const passwordRef = useRef(null);
-  const [loggedIn, setLoggedIn] = useState(false);
-  
   const { loading, data, error, postData } = usePost('/login');
   
   const handleSubmit = (e) => {
@@ -18,9 +16,9 @@ const Login = () => {
     const credentials = {
       username: usernameRef.current.value.trim(),
       password: passwordRef.current.value.trim(),
-    }
+    };
     postData(credentials);
-  }
+  };
   
   useEffect(() => {
     setActive({});
@@ -35,24 +33,30 @@ const Login = () => {
   }, [data]);
   
   return (
-    <div className="login">
-      <form onSubmit={handleSubmit}>
+    <div className="login-container">
+      <form onSubmit={handleSubmit} className="login-form">
         <h2>Login</h2>
-        <label>
-          username:
-          <input type="text" ref={usernameRef}/>
-          { error?.username && <p>User not found.</p> }
-        </label>
-        <label>
-          password:
-          <input type="password" ref={passwordRef}/>
-          { error?.password && <p>Incorrect password.</p> }
-        </label>
-        <button>{ loading ? 'Logging in...' : 'Login' }</button>
-        { (error?.network || error?.server) && <p>Something went wrong.</p> }
+        <div className="input-group">
+          <label>
+            Username:
+            <input type="text" ref={usernameRef} className="input" />
+            {error?.username && <span className="error-message">User not found.</span>}
+          </label>
+        </div>
+        <div className="input-group">
+          <label>
+            Password:
+            <input type="password" ref={passwordRef} className="input" />
+            {error?.password && <span className="error-message">Incorrect password.</span>}
+          </label>
+        </div>
+        <button type="submit" className="submit-button">
+          {loading ? 'Logging in...' : 'Login'}
+        </button>
+        {(error?.network || error?.server) && <p className="error-message">Something went wrong.</p>}
       </form>
     </div>
-  )
+  );
 }
 
-export default Login
+export default Login;
