@@ -1,17 +1,6 @@
 // https://i.imgur.com/hcz65Qd.jpeg
 // https://i.imgur.com/nK2ZdJM.jpeg
 // 'Hello everyone! we are happy to inform you that this website is now the official website for our community.'
-
-const testdata = {
-  message: 'Id velit veniam ad qui laborum. Eiusmod nostrud do aliqua exercitation eu aute cillum id.',
-  author: 'Juan Dela Cruz',
-  authorImg: 'https://i.imgur.com/hcz65Qd.jpeg',
-  role: 'Moderator',
-  date: '10/30/2024',
-  likes: 18,
-  liked: []
-}
-
 const announceModel = require('../database/models/announcement');
 const userModel = require('../database/models/user');
 const resObject = require('../configs/response');
