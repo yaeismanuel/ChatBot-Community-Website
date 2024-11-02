@@ -23,7 +23,7 @@
 .darkMode{
   --bg: #2d2d2d;
   --softColor: #363636;
-  --darkColor: #1e1e1e;
+  --darkColor: #1c1c1c;
   --textColor: #ededed;
   --primary: #3E96F4;
   --transBg: #3636367e;
@@ -64,14 +64,15 @@ body {
   width: 100%;
   height: 100vh;
   display: grid;
+  grid-template-columns: 1fr;
   grid-template-rows: max-content 1fr;
   overflow: hidden;
 }
 .container {
   height: 100%;
   padding: 1rem 1rem 5rem;
-  overflow: auto;
   scroll-behavior: smooth;
+  overflow: auto;
 }
 .container .h2{
   text-align: center;
@@ -80,80 +81,63 @@ body {
   margin: 10px 0 5px;
 }
 .container .contents{
+  width: 100%;
   margin: 1rem 0 0;
 }
 
 
 /* Login styles */
-body {
-  background-color: #121212;
-  color: #ffffff;
-  font-family: 'Arial', sans-serif;
-}
-
-.login-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-.login-form {
-  background-color: #1e1e1e;
-  padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  width: 300px;
-}
-
-h2 {
-  margin-bottom: 1.5rem;
+.login{
+  width: 100%;
+  padding: 1rem;
   text-align: center;
 }
-
-.input-group {
-  margin-bottom: 1.5rem;
-}
-
-label {
-  display: block;
-  margin-bottom: 0.5rem;
-}
-
-.input {
+.login form{
   width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #444;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.login form p{
+  font-size: 0.85rem;
+  color: red;
+}
+.login label{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+.login input{
+  padding: 5px 7px;
+  border: 0;
   border-radius: 5px;
-  background-color: #2a2a2a;
-  color: #ffffff;
+  background: var(--softColor);
+  box-shadow: 0 0 1.5px 0.2px var(--primary);
 }
-
-.input:focus {
-  border-color: #bb86fc;
-  outline: none;
-}
-
-.submit-button {
-  width: 100%;
-  padding: 0.7rem;
-  background-color: #6200ee;
-  color: white;
-  border: none;
+.login button{
+  width: max-content;
+  padding: 0.25rem 1.4rem;
+  border: 0;
   border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  background: var(--darkColor);
+  box-shadow: 0 0 1.5px 0.2px var(--primary);
 }
-
-.submit-button:hover {
-  background-color: #3700b3;
+.login .option{
+  margin: 1rem 0 0;
 }
-
-.error-message {
-  color: #ff5252;
+.login .option p{
+  font-size: 0.95rem;
+  color: var(--textColor);
+}
+.login .option a{
   font-size: 0.9rem;
+  text-decoration: underline;
+  text-decoration-color: var(--primary);
 }
-
 
 /* Loader animation */
 .loaderContainer{
@@ -242,7 +226,7 @@ header .mode{
   height: 100%;
   display: grid;
   grid-template-rows: max-content 1fr;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   z-index: 5;
@@ -307,8 +291,13 @@ header .mode{
   height: 100%;
   display: grid;
   grid-template-rows: 1fr max-content;
-}.menus .contents{
+}
+.menus .contents{
   width: 100%;
+}
+.menus .contents p{
+  padding: 1rem 0 0;
+  text-align: center;
 }
 .contents li{
   width: 100%;
@@ -431,6 +420,8 @@ nav .navActive{
 .cardBody pre{
   white-space: pre-wrap;
   word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-all;
 }
 .cardBody .cardImage{
   width: 100%;
@@ -499,116 +490,216 @@ nav .navActive{
   gap: 10px;
 }
 
-
-/* About page styles */
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
+/* API and Fb Bot page styles */
+.apiList, .fbpageList {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.8rem;
+  padding: 1rem 0 0;
+  overflow: auto;
+}
+.apiList .api, .fbpageList .fbpage{
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border-radius: 10px;
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 10px;
+  background: var(--darkColor);
+  box-shadow: 0 0 2px rgba(0,0,0,0.35);
+}
+.api .apiLogo, .fbpage .fbpageLogo{
+  width: 45px;
+  aspect-ratio: 1/1;
+  border: 2px solid var(--primary);
+  border-radius: 50%;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--softColor);
+}
+.api .apiInfo, .fbpage .fbpageInfo{
+  overflow: hidden;
+}
+.apiInfo p, .fbpageInfo p{
+  font-size: 1.1rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.apiInfo span, .fbpageInfo span{
+  font-size: 0.8rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   overflow: hidden;
 }
 
-.about-body {
-  padding: 20px;
-  min-height: 100vh;
-  overflow-y: auto; 
-}
 
-.dark {
-  background-color: #181818;
-  color: #e0e0e0;
+/* About page styles */
+.about {
+  padding: 0;
+  scroll-behavior: smooth;
 }
-
-.light {
-  background-color: #f0f0f0;
-  color: #333;
+.about h2{
+  font-weight: 600;
+  text-align: center;
 }
-
-.theme-toggle {
-  background-color: transparent;
-  border: 1px solid currentColor;
-  color: inherit;
-  padding: 10px 15px;
+.about .communityInfo{
+  padding: 1rem;
+}
+.communityInfo .imageCover{
+  width: 100%;
+  aspect-ratio: 1/0.3;
+  max-height: 150px;
+  background: var(--darkColor);
+}
+.communityInfo .description{
+  margin: 8px 0;
+}
+.description p span{
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+.communityInfo .fbGroup{
+  margin: 0.5rem 0;
+}
+.fbGroup p{
+  padding: 0.5rem 0 0;
+}
+.fbGroup span{
+  font-weight: 600;
+}
+.fbGroup div{
+  margin: 0.5rem 0;
+}
+.fbGroup div p{
+  font-weight: 600;
+  padding: 0;
+}
+.fbGroup ul{
+  padding: 0 2rem;
+}
+.about .management{
+  padding: 2rem 2rem 5rem;
+  border-radius: 15px;
+  background: var(--darkColor);
+}
+.management .admins{
+  width: 100%;
+  margin: 1rem 0;
   border-radius: 5px;
-  cursor: pointer;
-  margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
+  grid-template-rows: max-content;
+  gap: 0.7rem;
+}
+.admins .admin{
+  padding: 0.8rem;
+  border-radius: 5px;
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 10px;
+  background: var(--softColor);
+}
+.admin .userImg{
+  width: 50px;
+  aspect-ratio: 1/1;
+  border: 1.5px solid var(--primary);
+  border-radius: 5px;
+}
+.admin .info{
+  text-align: left;
+}
+.admin .info p{
+  font-size: 1rem;
+}
+.admin .info span{
+  font-size: 0.9rem;
 }
 
-.community-info {
+
+/* AddAnnounce styles */
+.addAnnounce {
+  width: 100%;
+  padding: 10% 1rem 5rem;
+  overflow-y: auto;
+}
+.addAnnounce h2{
+  font-size: 1.2rem;
+  text-align: center;
+  margin: 0 0 0.5rem;
+}
+.addAnnounce form{
+  max-width: 400px;
+  padding: 1.5rem;
+  margin: 0 auto;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
-  margin-bottom: 40px;
-  animation: fadeIn 1s ease-in;
+  background: var(--darkColor);
+  box-shadow: 0 0 2px var(--primary);
+}
+.addAnnounce label{
+  margin: 0 0 0.6rem;
+}
+.addAnnounce input{
+  width: 100%;
+  padding: 0.5rem;
+  border: 0;
+  border-radius: 5px;
+  background: var(--softColor);
+  box-shadow: 0 0 2px var(--primary);
+}
+.addAnnounce label textarea{
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 5px;
+  background: var(--softColor);
+}
+.addAnnounce form button{
+  font-size: 1rem;
+  padding: 0.6rem;
+  margin: 0.5rem 0 0;
+  border: 0;
+  border-radius: 5px;
+  color: var(--textColor);
+  background: var(--primary);
+  box-shadow: 0 0 2px var(--primary);
+}
+.addAnnounce .err{
+  font-size: 0.95rem;
+  text-align: center;
+  padding: 1rem 0;
+  color: red;
 }
 
-.image-cover {
-  background-image: url('../assets/community-bg.jpg');
-  height: 300px;
-  background-size: cover;
-  background-position: center;
-  border-radius: 8px;
-  margin-bottom: 20px;
-}
 
-.description {
-  font-size: 1.2em;
-}
-
-.highlight {
-  color: #4fc3f7;
-  font-weight: bold;
-}
-
-.fb-group, .management, .stats {
-  margin-bottom: 40px;
-}
-
-.label {
-  font-weight: bold;
-}
-
-.main-group, .alternative-groups {
-  margin: 10px 0;
-}
-
-.admins, .contributors {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-}
-
-.admin, .contributor {
-  display: flex;
-  align-items: center;
-  margin: 10px;
-  padding: 15px;
-  border: 1px solid #444;
-  border-radius: 8px;
-  transition: transform 0.3s;
-  background-color: #242424;
-}
-
-.admin:hover, .contributor:hover {
-  transform: scale(1.05);
-}
-
-.user-img {
-  border-radius: 50%;
-  width: 70px;
-  height: 70px;
-  margin-right: 10px;
-}
-
-.info {
-  display: flex;
-  flex-direction: column;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
+@media screen and (min-width: 600px) {
+  .about .management{
+    padding: 2rem;
   }
-  to {
-    opacity: 1;
+  .management .admins{
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+  .apiList, .fbpageList {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+  .apiList {
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  }
+}
+
+@media screen and (min-width: 900px) {
+  .container{
+    padding: 2.5% 20%;
+  }
+  .about .management{
+    padding: 2rem;
+  }
+  .apiList {
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   }
 }

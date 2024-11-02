@@ -12,7 +12,7 @@ const Menu = () => {
   return (
     <div className="menu" style={{ width: toggle && '180px' }}>
       <div className="profile">
-        <div className="profilePic" style={{ backgroundImage: `url("${defaultProfile}")`}}></div>
+        <div className="profilePic" style={{ backgroundImage: `url("${ userData?.img ? userData?.img : defaultProfile}")`}}></div>
         <div className="profileInfo">
           {
             userData ?
@@ -33,25 +33,26 @@ const Menu = () => {
       </div>
       <div className="menus">
         <ul className="contents">
-          <li>
-            <Link to="#">
+          <p>ADMIN ACCESS</p>
+          <li onClick={() => setToggle(false)}>
+            <Link to="/addannounce">
               <FaPlusCircle className="plusIcon" />
               Announcement
             </Link>
           </li>
-          <li>
-            <Link to="#">
+          <li onClick={() => setToggle(false)}>
+            <Link to="/addwebsite">
               <FaPlusCircle className="plusIcon" />
               Website
             </Link>
           </li>
-          <li>
+          <li onClick={() => setToggle(false)}>
             <Link to="#">
               <FaPlusCircle className="plusIcon" />
               FB Page
             </Link>
           </li>
-          <li>
+          <li onClick={() => setToggle(false)}>
             <Link to="#">
               <FaPlusCircle className="plusIcon" />
               API

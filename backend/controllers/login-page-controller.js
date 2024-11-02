@@ -33,7 +33,7 @@ const login = async (req, res) => {
         
         if (isCorrect) {
           const token = await createToken(userData.id);
-          res.cookie('jwt', token, { httpOnly: true, maxAge: 60000 * 1000, sameSite: 'none' });
+          res.cookie('jwt', token, { httpOnly: true, maxAge: expiration * 1000, sameSite: 'none' });
           res.json(resObject({ ...userData, token }, true, 'Logged In.'));
         } else {
           res.json(resObject({ password: true }, false));
@@ -52,26 +52,41 @@ const signup = async (req, res) => {
   try {
     const newUserData = req.body;
     newUserData.id = await genId();
+    newUserData.role = 'Member';
+    newUserData.liked = [];
+    
+    if (!newUserData.name || !newUserData.username || !newUserData.password) return res.json(resObject(null, false, 'Name, username, and password are mandatory.'));
+    
+    if (await userModel.findOne({ username: newUserData.username })) return res.json(resObject({ username: true }, false, 'Username already taken.'));
+    
     bcrypt.genSalt(10, (error, salt) => {
       if (error) throw new Error(error);
       bcrypt.hash(newUserData.password, salt, async (err, hash) => {
         try {
           if (err) throw new Error(err);
-          data.password = hash;
+          newUserData.password = hash;
+          console.log(newUserData);
           const newUser = await userModel.create(newUserData);
           
+          const userData = {
+            id: newUser.id,
+            name: newUser.name,
+            username: newUser.username,
+            role: newUser.role,
+          }
+          
           const token = await createToken(newUser.id);
-          res.cookie('jwt', token, { httpOnly: true, maxAge: 60000 * 1000, sameSite: 'none' });
-          res.json(resObject({ ...newUser, token }, true, 'Signed In.'));
+          res.cookie('jwt', token, { httpOnly: true, maxAge: expiration * 1000, sameSite: 'none' });
+          res.json(resObject({ ...userData, token }, true, 'Signed In.'));
         } catch (e) {
-          res.status(500);
           console.log(e);
+          res.json(resObject({ server: true }, false, e.message));
         }
       })
     })
   } catch (e) {
-    res.status(500);
     console.log(e);
+    res.json(resObject({ server: true }, false, e.message));
   }
 }
 

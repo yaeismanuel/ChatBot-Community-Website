@@ -22,9 +22,11 @@ app.use((req, res, next) => {
 // routes
 app.get('/', (req, res) => res.send('ChatBot Community Server 🤖'));
 app.use(require('./routes/login-page'));
-app.use('/user', require('./routes/user-profile'));
+app.use(require('./routes/user-profile'));
 app.use('/api/websites', require('./routes/websites-page'));
 app.use('/api/homepage', require('./routes/homepage'));
+app.use('/api/apis', require('./routes/api-page'));
+app.use('/api/fbpages', require('./routes/fbpage'));
 
 // Database connection
 connectMongoDB().then((connection) => {

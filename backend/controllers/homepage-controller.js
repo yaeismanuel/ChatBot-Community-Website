@@ -13,10 +13,16 @@ const testdata = {
 }
 
 const announceModel = require('../database/models/announcement');
+const userModel = require('../database/models/user');
 const resObject = require('../configs/response');
+
+const getCurrentDate = () => {
+  return (new Date()).toLocaleDateString();
+}
 
 const getAnnouncements = async (req, res) => {
   try {
+    // await announceModel.deleteMany({})
     const announcements = await announceModel.find({});
     res.json(resObject(announcements, true));
   } catch (e) {
@@ -28,12 +34,26 @@ const getAnnouncements = async (req, res) => {
 const addAnnounce = async (req, res) => {
   try {
     const announce = req.body;
+    const { userId } = res.locals;
+    console.log(announce);
+    const user = await userModel.findOne({ id: userId });
     
-    if (!announce.message || !announce.author || !announce.role) return res.json(resObject(null, false, 'Message, author, and role of announcement are mandatory.'));
+    if (!user) return res.json(resObject({ authError: true }, false, 'You are not authorized to do this action.'));
+    if (!announce.message) return res.json(resObject(null, false, 'Message of announcement is mandatory.'));
+    
+    console.log(user);
+    
+    announce.author = user.name;
+    announce.authorImg = user.img;
+    announce.role = user.role;
+    announce.likes = 0;
+    announce.whoLiked = [];
+    announce.date = getCurrentDate();
+    
     const create = await announceModel.create(announce);
     res.json(resObject(create, true));
   } catch (e) {
-    res.json(resObject(null, false, 'Failed to fetch announcements.'));
+    res.json(resObject(null, false, 'Failed to add announcement.'));
     console.log(e);
   }
 }

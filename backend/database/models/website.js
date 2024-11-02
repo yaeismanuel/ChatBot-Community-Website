@@ -14,6 +14,7 @@ const websiteSchema = new mongoose.Schema({
   },
   thumbnail: {
     type: String,
+    required: true
   },
   developer: {
     type: String,

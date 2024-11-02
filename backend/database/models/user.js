@@ -3,16 +3,17 @@ const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
   id: {
     type: Number,
-    unique: true,
     required: true
   },
   name: {
     type: String,
     required: true
   },
+  img: {
+    type: String,
+  },
   username: {
     type: String,
-    unique: true,
     required: true
   },
   password: {
@@ -26,6 +27,4 @@ const userSchema = new mongoose.Schema({
   liked: [String]
 }, { timestamps: true });
 
-const model = mongoose.model('user', userSchema);
-
-module.exports = model
+module.exports = mongoose.model('user', userSchema);

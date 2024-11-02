@@ -7,7 +7,7 @@ const {
 } = require('../controllers/homepage-controller');
 
 router.get('/', getAnnouncements);
-router.get('/add', addAnnounce);
+router.post('/add', addAnnounce);
 router.post('/like', likeAnnounce);
 
 module.exports = router

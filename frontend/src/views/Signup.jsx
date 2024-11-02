@@ -4,18 +4,22 @@ import { ContextData } from '../App';
 import { usePost } from '../hooks/Requests';
 import axios from 'axios';
 
-const Login = () => {
+const Signup = () => {
   const { setUserData, setActive } = useContext(ContextData);
   const navigate = useNavigate();
+  const nameRef = useRef(null);
+  const userImgRef = useRef(null);
   const usernameRef = useRef(null);
   const passwordRef = useRef(null);
   const [loggedIn, setLoggedIn] = useState(false);
   
-  const { loading, data, error, postData } = usePost('/login');
+  const { loading, data, error, postData } = usePost('/signup');
   
   const handleSubmit = (e) => {
     e.preventDefault();
     const credentials = {
+      name: nameRef.current.value.trim(),
+      img: userImgRef.current.value.trim(),
       username: usernameRef.current.value.trim(),
       password: passwordRef.current.value.trim(),
     }
@@ -37,26 +41,33 @@ const Login = () => {
   return (
     <div className="login">
       <form onSubmit={handleSubmit}>
-        <h2>Login</h2>
+        <h2>Signup</h2>
+        <label>
+          name:
+          <input type="text" ref={nameRef}/>
+        </label>
+        <label>
+          user image (link):
+          <input type="text" ref={userImgRef}/>
+        </label>
         <label>
           username:
           <input type="text" ref={usernameRef}/>
-          { error?.username && <p>User not found.</p> }
         </label>
+        { error?.username && <p>Username already taken.</p> }
         <label>
           password:
           <input type="password" ref={passwordRef}/>
-          { error?.password && <p>Incorrect password.</p> }
         </label>
-        <button>{ loading ? 'Logging in...' : 'Login' }</button>
-        { (error?.network || error?.server) && <p>Something went wrong.</p> }
+        <button>Signup</button>
+        { error && <p>Something went wrong.</p> }
       </form>
       <div className="option">
-        <p>Don't have an account? </p>
-        <Link to="/signup">Signup</Link>
+        <p>Already have an account? </p>
+        <Link to="/login">Login</Link>
       </div>
     </div>
   )
 }
 
-export default Login
+export default Signup

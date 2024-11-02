@@ -9,6 +9,9 @@ import Apis from './views/APIs';
 import Pages from './views/Pages';
 import About from './views/About';
 import Login from './views/Login';
+import Signup from './views/Signup';
+import AddAnnounce from './views/AddAnnounce';
+import AddWebsite from './views/AddWebsite';
 
 // components
 import Header from './components/Header';
@@ -51,6 +54,9 @@ function App() {
             <Route path="/pages" element={ <Pages /> } />
             <Route path="/about" element={ <About /> } />
             <Route path="/login" element={ <Login /> } />
+            <Route path="/signup" element={ <Signup /> } />
+            <Route path="/addannounce" element={ <AddAnnounce /> } />
+            <Route path="/addwebsite" element={ <AddWebsite /> } />
           </Routes>
           <Navbar />
         </Router>

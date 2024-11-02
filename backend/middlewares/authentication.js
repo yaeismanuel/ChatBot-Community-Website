@@ -8,7 +8,6 @@ const authenticate = async (req, res, next) => {
       next();
     })
   } catch (e) {
-    console.log(e.message, 'at authentication middleware');
     next();
   }
 }

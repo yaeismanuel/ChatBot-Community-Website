@@ -38,6 +38,7 @@ const Home = () => {
     <div className="container">
       <h2 className="h2">📢 Announcements</h2>
       <div className="contents">
+        { data?.response?.length == 0 && <p style={{ textAlign: 'center' }}>No data.</p>}
         <div className="announceCards">
           <DisplayAnnouncements announcements={data.response} refetch={retry}/>
         </div>

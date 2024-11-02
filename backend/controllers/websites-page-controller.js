@@ -61,16 +61,16 @@ const addWebsite = async (req, res) => {
       name: 'CodeBuddy Solutions Official',
       description: 'Consequat est est consequat consectetur deserunt nulla sunt irure. Adipisicing voluptate magna nisi consequat aute.',
       link: 'https://codebuddysltns.verahost.ph',
-      thumbnail: 'https://i.imgur.com/cEyUa2g.jpeg',
+      thumbnail: 'https://i.imgur.com/hcz65Qd.jpeg',
       developer: 'renzdev',
       devFb: '@bosscleo3233',
     }
     
     const web = req.body;
     
-    // if (!web.name || !web.link || !web.developer || !web.devFb) return res.json(resObject(null, false, 'Name, link, developer, and devFb of the website are mandatory.'));
+    if (!web.name || !web.thumbnail || !web.link || !web.developer || !web.devFb) return res.json(resObject(null, false, 'Name, thumbnail, link, developer, and devFb of the website are mandatory.'));
     
-    const websites = await websiteModel.create(testdata);
+    const websites = await websiteModel.create(web);
     res.json(resObject({ name: websites.name }, true));
   } catch (e) {
     res.json(resObject(null, false, 'Failed to add website.'));
