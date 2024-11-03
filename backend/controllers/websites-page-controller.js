@@ -1,4 +1,5 @@
 const websiteModel = require('../database/models/website');
+const userModel = require('../database/models/user');
 const resObject = require('../configs/response');
 
 const getWebsites = async (req, res) => {
@@ -16,15 +17,19 @@ const addWebsite = async (req, res) => {
     const web = req.body;
     const { userId } = res.locals;
     
-    if (!userId) return res.json(resObject({ 
-        authError: true,
-        message: 'Not logged in.'
-      }, false));
-    
     if (!web.name || !web.thumbnail || !web.link || !web.developer || !web.devFb) return res.json(resObject(null, false, 'Name, thumbnail, link, developer, and devFb of the website are mandatory.'));
     
-    const websites = await websiteModel.create(web);
-    res.json(resObject({ name: websites.name }, true));
+    const user = await userModel.findOne({ id: userId });
+    
+    if (!user) return res.json(resObject({ authError: true }, false, 'You are not authorized to do this action.'));
+    
+    if (user?.role === 'Moderator' || user?.role === 'Admin') {
+      const websites = await websiteModel.create(web);
+      res.json(resObject({ name: websites.name }, true));
+    } else {
+      return res.json(resObject({ authError: true }, false, 'You are not authorized to do this action.'));
+    }
+    
   } catch (e) {
     res.json(resObject(null, false, 'Failed to add website.'));
     console.log(e);

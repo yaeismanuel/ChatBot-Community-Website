@@ -18,6 +18,8 @@
   --textColor: #31393C;
   --primary: #3E96F4;
   --transBg: #ffffff7e;
+  --dtableDivide: #c0c0c0;
+  --dtableText: #ededed;
 }
 
 .darkMode{
@@ -323,7 +325,7 @@ header .mode{
 
 
 /* Navbar styles */
-nav {
+.navbar nav {
   width: max-content;
   border-radius: 10px;
   padding: 0.4rem 0.8rem;
@@ -338,7 +340,7 @@ nav {
   box-shadow: 0 0 2px var(--primary);
   overflow: hidden;
 }
-nav li {
+.navbar nav li {
   aspect-ratio: 1/1;
   border-radius: 50%;
   padding: 0.45rem;
@@ -347,18 +349,18 @@ nav li {
   align-items: center;
   gap: 5px;
 }
-nav li a{
+.navbar nav li a{
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-nav li .navIcon{
+.navbar nav li .navIcon{
   width: 100%;
   font-size: 1.15rem;
   color: var(--textColor);
 }
-nav .navActive{
+.navbar nav .navActive{
   background: var(--primary);
 }
 
@@ -519,6 +521,8 @@ nav .navActive{
   justify-content: center;
   align-items: center;
   background: var(--softColor);
+  background-size: cover;
+  background-position: center;
 }
 .api .apiInfo, .fbpage .fbpageInfo{
   overflow: hidden;
@@ -676,6 +680,11 @@ nav .navActive{
   color: red;
 }
 
+
+/* Admin panel styles */
+.adminPanel {
+  box-shadow: 0 0 1px 1px var(--darkColor);
+}
 
 @media screen and (min-width: 600px) {
   .about .management{

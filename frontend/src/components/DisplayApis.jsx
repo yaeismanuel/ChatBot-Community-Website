@@ -8,7 +8,7 @@ export const DisplayApis = ({ APIs }) => {
           <Link to={ api.link ? api.link : "#" } key={id + 1}>
             <div className="api">
               <div className="apiLogo" style={{ backgroundImage: api.img && `url("${api.img}")`}}>
-                { api.img && <span>API</span> }
+                { !api.img && <span>API</span> }
               </div>
               <div className="apiInfo">
                 <p>{ api.name }</p>

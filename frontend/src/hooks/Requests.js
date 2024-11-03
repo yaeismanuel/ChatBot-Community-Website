@@ -30,7 +30,8 @@ export const useFetch = (endpoint) => {
         setError(null);
         setLoading(false);
       } else {
-        throw new Error('Failed to fetch data.');
+        setError(d?.response?.error);
+        setLoading(false);
       }
     } catch (e) {
       if (e.code === 'ERR_CANCELED') return;
@@ -92,7 +93,6 @@ export const usePost = (endpoint) => {
       setLoading(false);
     }
   }
-  
   
   return { 
     loading,

@@ -12,7 +12,7 @@ const getCurrentDate = () => {
 const getAnnouncements = async (req, res) => {
   try {
     // await announceModel.deleteMany({})
-    const announcements = await announceModel.find({});
+    const announcements = await announceModel.find({}).sort({ createdAt: -1 });
     res.json(resObject(announcements, true));
   } catch (e) {
     res.json(resObject(null, false, 'Failed to fetch announcements.'));
@@ -24,13 +24,12 @@ const addAnnounce = async (req, res) => {
   try {
     const announce = req.body;
     const { userId } = res.locals;
-    console.log(announce);
+    
+    if (!announce.message) return res.json(resObject(null, false, 'Message of announcement is mandatory.'));
+    
     const user = await userModel.findOne({ id: userId });
     
     if (!user) return res.json(resObject({ authError: true }, false, 'You are not authorized to do this action.'));
-    if (!announce.message) return res.json(resObject(null, false, 'Message of announcement is mandatory.'));
-    
-    console.log(user);
     
     announce.author = user.name;
     announce.authorImg = user.img;
@@ -39,8 +38,13 @@ const addAnnounce = async (req, res) => {
     announce.whoLiked = [];
     announce.date = getCurrentDate();
     
-    const create = await announceModel.create(announce);
-    res.json(resObject(create, true));
+    if (user?.role === 'Moderator' || user?.role === 'Admin') {
+      const create = await announceModel.create(announce);
+      res.json(resObject(create, true));
+    } else {
+      return res.json(resObject({ authError: true }, false, 'You are not authorized to do this action.'));
+    }
+    
   } catch (e) {
     res.json(resObject(null, false, 'Failed to add announcement.'));
     console.log(e);

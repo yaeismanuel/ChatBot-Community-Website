@@ -14,12 +14,12 @@ const getFbpages = async (req, res) => {
 
 const addFbpage = async (req, res) => {
   try {
-    const id = res.locals?.userId;
     const newFbpage = req.body;
+    const { userId } = res.locals;
     
-    const user = await userModel.findOne({ id });
+    if (!newFbpage.name || !newFbpage.owner) return res.json(resObject(null, false, 'Name and owner of Fb bot page are mandatory.'));
     
-    if (!newFbpage.name || !newFbpage.owner || !newFbpage.link) return res.json(resObject(null, false, 'Name, owner, and link of Fb bot page are mandatory.'));
+    const user = await userModel.findOne({ id: userId });
     
     if (user.role == 'Moderator' || user.role == 'Admin') {
       const fbpage = await fbpageModel.create(newFbpage);

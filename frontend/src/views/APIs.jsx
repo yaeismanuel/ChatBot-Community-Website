@@ -37,19 +37,6 @@ const APIs = () => {
         <DisplayApis APIs={ data.response } />
       </div>
     </div>
-    
-    
-        // <Link to="#">
-        //   <div className="api">
-        //     <div className="apiLogo">
-        //       <span>API</span>
-        //     </div>
-        //     <div className="apiInfo">
-        //       <p>Juan Tamad APIs</p>
-        //       <span>By: Juan Tamad</span>
-        //     </div>
-        //   </div>
-        // </Link>
   )
 }
 

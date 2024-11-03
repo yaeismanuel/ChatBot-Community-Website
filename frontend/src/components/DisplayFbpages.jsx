@@ -8,7 +8,7 @@ export const DisplayFbpages = ({ Fbpages }) => {
           <Link to={ fbpage.link ? fbpage.link : "#" } key={id + 1}>
             <div className="fbpage">
               <div className="fbpageLogo" style={{ backgroundImage: fbpage.img && `url("${fbpage.img}")`}}>
-                { fbpage.img && <span>FB</span> }
+                { !fbpage.img && <span>FB</span> }
               </div>
               <div className="fbpageInfo">
                 <p>{ fbpage.name }</p>
