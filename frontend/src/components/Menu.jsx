@@ -84,9 +84,12 @@ const Menu = () => {
         </ul>
         <div className="visits">
           <p>Total Views: </p>
-          <Link to="/login">
-            <button onClick={handleLogout}>Logout</button>
-          </Link>
+          {
+            userData &&
+            <Link to="/login">
+              <button onClick={handleLogout}>Logout</button>
+            </Link>
+          }
         </div>
       </div>
     </div>
