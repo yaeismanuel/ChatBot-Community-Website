@@ -339,7 +339,7 @@ header .mode{
   font-size: 0.95rem;
 }
 .menuFooter .visits{
-  
+  padding: 0 0 0.5rem;
 }
 .menuFooter .logoutBtn{
   width: 100%;

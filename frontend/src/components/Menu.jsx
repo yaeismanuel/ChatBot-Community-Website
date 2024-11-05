@@ -84,10 +84,12 @@ const Menu = () => {
         </ul>
         <div className="menuFooter">
           <p className="visits">Total Views: <span>{ views }</span></p>
-          <p className="credits">© CodeBuddy Solutions</p>
-          <Link to="/login">
-            <button className="logoutBtn" onClick={handleLogout}>Logout</button>
-          </Link>
+          {
+            userData &&
+            <Link to="/login">
+              <button className="logoutBtn" onClick={handleLogout}>Logout</button>
+            </Link>
+          }
         </div>
       </div>
     </div>
