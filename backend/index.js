@@ -7,20 +7,28 @@ const connectMongoDB = require('./database/connectMongoDB');
 
 const PORT = process.env.PORT || 5000;
 const app = express();
-const origin = process.env.FRONTEND || 'http://localhost:5173';
+const frontend = process.env.FRONTEND || 'http://localhost:5173';
+
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (origin === frontend) {
+      return callback(null, true);
+    } else {
+      return callback(null, false);
+    }
+  },
+};
+
 
 // middlewares
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(cookieParser());
 app.use(express.json());
 app.use(authenticate);
-app.use((req, res, next) => {
-  console.log(req.path);
-  next();
-})
 
 // routes
 app.get('/', (req, res) => res.send('ChatBot Community Server 🤖'));
+app.use(require('./routes/views'));
 app.use(require('./routes/login-page'));
 app.use(require('./routes/user-profile'));
 app.use('/api/websites', require('./routes/websites-page'));
@@ -36,5 +44,5 @@ connectMongoDB().then((connection) => {
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}.`);
-  console.log(`Frontend: ${origin}`);
+  console.log(`Frontend: ${frontend}`);
 });

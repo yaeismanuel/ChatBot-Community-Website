@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useFetch, usePost } from '../hooks/Requests';
+import { FaTrashCan } from "react-icons/fa6";
 import DataTable, { createTheme } from 'react-data-table-component';
 
 createTheme('mamamo', {
@@ -19,16 +20,28 @@ function AdminPanel() {
   const { loading: isloading, data: postdata, error: posterror, postData } = usePost('/user/update');
   
   const makeAdmin = (e) => {
-    postData({ id: e.id, q: 'Admin'});
-    setPostreq({ name: e.name, query: 'Admin' });
+    if (confirm(`Are you sure you want to update ${e.name} account to admin?`)) {
+      postData({ id: e.id, q: 'Admin'});
+      setPostreq({ name: e.name, query: 'Admin' });
+    }
   }
   const makeModerator = (e) => {
-    postData({ id: e.id, q: 'Moderator'});
-    setPostreq({ name: e.name, query: 'Moderator' });
+    if (confirm(`Are you sure you want to update ${e.name} account as moderator?`)) {
+      postData({ id: e.id, q: 'Moderator'});
+      setPostreq({ name: e.name, query: 'Moderator' });
+    }
   }
   const demoteToMember = (e) => {
-    postData({ id: e.id, q: 'Member'});
-    setPostreq({ name: e.name, query: 'Member' });
+    if (confirm(`Are you sure you want to demote ${e.name} to member?`)) {
+      postData({ id: e.id, q: 'Member'});
+      setPostreq({ name: e.name, query: 'Member' });
+    }
+  }
+  const deleteUser = (e) => {
+    if (confirm(`Are you sure you want to delete ${e.name} account?`)) {
+      postData({ id: e.id, q: 'Member', del: true});
+      setPostreq({ name: e.name, query: 'Delete', del: true });
+    }
   }
   
   const customStyles = {
@@ -65,7 +78,10 @@ function AdminPanel() {
         }}>
           <button style={{ ...customStyles, background: 'green' }} onClick={() => makeAdmin(row)}>A</button>
           <button style={{ ...customStyles, background: 'blue' }} onClick={() => makeModerator(row)}>M</button>
-          <button style={{ ...customStyles, background: 'red' }} onClick={() => demoteToMember(row)}>D</button>
+          <button style={{ ...customStyles, background: '#ff4a4a' }} onClick={() => demoteToMember(row)}>D</button>
+          <button style={{ ...customStyles, background: 'red' }} onClick={() => deleteUser(row)}>
+            <FaTrashCan style={{ color: '#fff' }} />
+          </button>
         </div>
       ),
     },
@@ -76,15 +92,21 @@ function AdminPanel() {
       setProfiles(data.response)
     }
     if (postdata?.success) {
-      alert(`Successfully updated ${postreq.name} as ${postreq.query}.`);
-      const updated = profiles.map(d => {
-        if (d.id === postdata.response.id) {
-          return postdata.response;
-        } else {
-          return d;
-        }
-      });
-      setProfiles(updated);
+      if (postreq.del) {
+        const updated = profiles.filter(d => d.id !== postdata.response.id ? true : false);
+        setProfiles(updated);
+        alert(`Successfully deleted ${postreq.name}.`);
+      } else {
+        const updated = profiles.map(d => {
+          if (d.id === postdata.response.id) {
+            return postdata.response;
+          } else {
+            return d;
+          }
+        });
+        setProfiles(updated);
+        alert(`Successfully updated ${postreq.name} as ${postreq.query}.`);
+      }
     }
     if (posterror) {
       alert(`Unable to update ${postreq.name} as ${postreq.query}.`)

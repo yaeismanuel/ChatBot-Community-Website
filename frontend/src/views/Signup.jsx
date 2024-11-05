@@ -43,29 +43,29 @@ const Signup = () => {
       <form onSubmit={handleSubmit}>
         <h2>Signup</h2>
         <label>
-          name:
+          Name:
           <input type="text" ref={nameRef}/>
         </label>
         <label>
-          user image (link):
+          User image (link/optional):
           <input type="text" ref={userImgRef}/>
         </label>
         <label>
-          username:
+          Username:
           <input type="text" ref={usernameRef}/>
         </label>
         { error?.username && <p>Username already taken.</p> }
         <label>
-          password:
+          Password:
           <input type="password" ref={passwordRef}/>
         </label>
         <button>Signup</button>
         { error && <p>Something went wrong.</p> }
+        <div className="option">
+          <p>Already have an account? </p>
+          <Link to="/login">Login</Link>
+        </div>
       </form>
-      <div className="option">
-        <p>Already have an account? </p>
-        <Link to="/login">Login</Link>
-      </div>
     </div>
   )
 }

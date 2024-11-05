@@ -66,7 +66,7 @@ const getUsers = async (req, res) => {
 
 const updateProfile = async (req, res) => {
   try {
-    const { id, q } = req.body;
+    const { id, q, del } = req.body;
     const { userId } = res.locals;
     const qList = ['Admin', 'Moderator', 'Member'];
     
@@ -82,6 +82,11 @@ const updateProfile = async (req, res) => {
     const user = await userModel.findOne({ id: userId });
     
     if (user.role == 'Admin') {
+      if (del) {
+        const deleteUser = await userModel.findOneAndDelete({ id });
+        res.json(resObject({ id }, true));
+        return;
+      }
       const update = await userModel.findOneAndUpdate({ id }, { role: q }, { new: true })
       res.json(resObject({
         id: update.id,

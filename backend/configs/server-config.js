@@ -1,3 +1,0 @@
-{
-  "dev-mode": true
-}

@@ -17,18 +17,21 @@ const About = () => {
       <div className="communityInfo">
         <div className="imageCover"></div>
         <div className="description">
-          <p><span>ChatBot Community</span> is a veniam cillum fugiat id eu id commodo do laborum consequat ad. Excepteur elit cillum non anim laboris. Esse culpa esse dolore velit veniam aute officia amet reprehenderit nisi. Non duis pariatur enim tempor enim ullamco consectetur minim consequat labore adipisicing sint. Aliqua duis irure nulla aliquip esse ad anim pariatur proident elit voluptate. Deserunt anim aute consectetur ipsum.</p>
+          <p><span>ChatBot Community</span> is a vibrant community where you can explore, learn, and share insights. Our mission is to foster collaboration and innovation. Join us for exciting discussions and opportunities!</p>
         </div>
-        <div className="fbGroup">
-          <div className="main">
-            <p>Main Group:</p>
-            <ul>
-              <li>
-                <a href="https://facebook.com/main">https://facebook.com/main</a>
-              </li>
-            </ul>
+        {
+          false &&
+          <div className="fbGroup">
+            <div className="main">
+              <p>Main FB Group:</p>
+              <ul>
+                <li>
+                  <a href="https://facebook.com/groups/coders.dev/">Chatbot Community</a>
+                </li>
+              </ul>
+            </div>
           </div>
-        </div>
+        }
       </div>
       <div className="management">
         <h2>Management</h2>

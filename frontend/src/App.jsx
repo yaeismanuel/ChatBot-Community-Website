@@ -27,6 +27,7 @@ export const ContextData = createContext();
 function App() {
   const [active, setActive] = useState({});
   const [toggle, setToggle] = useState(false);
+  const [views, setViews] = useState(null);
   const [userData, setUserData] = useState(null);
   
   const contextValue = {
@@ -34,15 +35,19 @@ function App() {
     setActive,
     toggle,
     setToggle,
+    views,
+    setViews,
     userData,
     setUserData
   }
   
   const { data } = useFetch('/user');
+  const { data: viewscount } = useFetch('/views');
   
   useEffect(() => {
     if (data) setUserData(data.response);
-  }, [data])
+    if (viewscount) setViews(viewscount?.response?.count);
+  }, [data, viewscount])
   
   return (
     <ContextData.Provider value={contextValue}>

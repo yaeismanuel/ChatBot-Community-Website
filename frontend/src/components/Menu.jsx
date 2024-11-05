@@ -7,7 +7,7 @@ import { FaPlusCircle, FaBook } from "react-icons/fa";
 import defaultProfile from '../assets/defaultProfile.png';
 
 const Menu = () => {
-  const { userData, setUserData, toggle, setToggle } = useContext(ContextData);
+  const { views, userData, setUserData, toggle, setToggle } = useContext(ContextData);
   
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -82,10 +82,11 @@ const Menu = () => {
             </>
           }
         </ul>
-        <div className="visits">
-          <p>Total Views: </p>
+        <div className="menuFooter">
+          <p className="visits">Total Views: <span>{ views }</span></p>
+          <p className="credits">© CodeBuddy Solutions</p>
           <Link to="/login">
-            <button onClick={handleLogout}>Logout</button>
+            <button className="logoutBtn" onClick={handleLogout}>Logout</button>
           </Link>
         </div>
       </div>

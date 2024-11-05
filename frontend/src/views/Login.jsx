@@ -39,22 +39,26 @@ const Login = () => {
       <form onSubmit={handleSubmit}>
         <h2>Login</h2>
         <label>
-          username:
+          Username:
           <input type="text" ref={usernameRef}/>
           { error?.username && <p>User not found.</p> }
         </label>
         <label>
-          password:
+          Password:
           <input type="password" ref={passwordRef}/>
           { error?.password && <p>Incorrect password.</p> }
         </label>
+        <div className="remember">
+          <input type="checkbox" />
+          Remember me
+        </div>
         <button>{ loading ? 'Logging in...' : 'Login' }</button>
         { (error?.network || error?.server) && <p>Something went wrong.</p> }
+        <div className="option">
+          <p>Don't have an account? </p>
+          <Link to="/signup">Signup</Link>
+        </div>
       </form>
-      <div className="option">
-        <p>Don't have an account? </p>
-        <Link to="/signup">Signup</Link>
-      </div>
     </div>
   )
 }
