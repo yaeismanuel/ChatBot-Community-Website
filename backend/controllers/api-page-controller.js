@@ -4,7 +4,7 @@ const resObject = require('../configs/response');
 
 const getApis = async (req, res) => {
   try {
-    const apis = await apiModel.find({}).sort({ createdAt: -1 });
+    const apis = await apiModel.find({});
     res.json(resObject(apis, true));
   } catch (e) {
     console.log(e);

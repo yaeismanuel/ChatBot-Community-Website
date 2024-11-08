@@ -22,6 +22,7 @@ const getUserInfo = async (req, res) => {
 const getManagement = async (req, res) => {
   try {
     const users = await userModel.find({});
+    console.log(users)
     const usersData = users.map(user => ({
       id: user.id,
       name: user.name,
