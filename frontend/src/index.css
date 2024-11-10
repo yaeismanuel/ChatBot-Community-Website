@@ -398,10 +398,13 @@ header .mode{
 /* Announcements page styles */
 .announceCards{
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, 1fr);
   gap: 1rem;
 }
 .announceCard{
+  width: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
   border-radius: 10px;
   background: var(--softColor);
   box-shadow: 0 0 1px 1px var(--darkColor);
@@ -444,6 +447,10 @@ header .mode{
   text-align: right;
 }
 .announceCard .cardBody{
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr max-content;
   padding: 0.5rem 1rem;
 }
 .cardBody .announceId{
