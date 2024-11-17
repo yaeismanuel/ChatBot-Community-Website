@@ -1,6 +1,7 @@
 import { useState, createContext, useEffect } from 'react';
 import { useFetch } from './hooks/Requests';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import config from './config.json';
 
 // pages
 import Home from './views/Home';
@@ -15,6 +16,9 @@ import AddFbpage from './views/AddFbpage';
 import AddAnnounce from './views/AddAnnounce';
 import AddWebsite from './views/AddWebsite';
 import AdminPanel from './views/AdminPanel';
+import Newsfeed from './views/Newsfeed';
+import Post from './views/Post';
+import AddPost from './views/AddPost';
 
 // components
 import Header from './components/Header';
@@ -42,7 +46,7 @@ function App() {
   }
   
   const { data } = useFetch('/user');
-  const { data: viewscount } = useFetch('/views');
+  const { data: viewscount } = config.production ? useFetch('/views') : {};
   
   useEffect(() => {
     if (data) setUserData(data.response);
@@ -68,6 +72,9 @@ function App() {
             <Route path="/addfbpage" element={ <AddFbpage /> } />
             <Route path="/addwebsite" element={ <AddWebsite /> } />
             <Route path="/manage" element={ <AdminPanel /> } />
+            <Route path="/feed" element={ <Newsfeed /> } />
+            <Route path="/post/:id" element={ <Post /> } />
+            <Route path="/addpost" element={ <AddPost /> } />
           </Routes>
           <Navbar />
         </Router>

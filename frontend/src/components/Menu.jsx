@@ -39,6 +39,12 @@ const Menu = () => {
       </div>
       <div className="menus">
         <ul className="contents">
+          <li onClick={() => setToggle(false)}>
+            <Link to="/feed">
+              <FaBook className="plusIcon" />
+              Newsfeed
+            </Link>
+          </li>
           {
             (userData?.role == 'Moderator' || userData?.role == 'Admin') &&
             <>
