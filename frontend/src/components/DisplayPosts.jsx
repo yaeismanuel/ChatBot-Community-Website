@@ -1,4 +1,4 @@
-import { FaRegThumbsUp, FaRegComment, FaLink, FaImages, FaPaperPlane } from 'react-icons/fa';
+import { FaRegThumbsUp, FaRegComment, FaLink, FaImages, FaPaperPlane, FaPlusCircle } from 'react-icons/fa';
 import { RxDotsHorizontal } from "react-icons/rx";
 import { Link } from 'react-router-dom';
 
@@ -8,7 +8,12 @@ const DisplayPosts = ({ posts }) => {
   
   return (
     <div className="posts">
-      <h2>📰 Newsfeed</h2>
+      <h2>
+        <Link to="/addpost" >
+          <FaPlusCircle className="newpostIcon" />
+        </Link>
+        📰 Newsfeed
+      </h2>
       {
         posts?.map((post, id) => (
           <div className="post" key={id}>
@@ -34,8 +39,8 @@ const DisplayPosts = ({ posts }) => {
                   <span>{ post.likes }</span>
                 </li>
                 <li className="commentsBtn">
-                  <FaRegComment className="icon" />
                   <Link to={`/post/${post._id}`}>
+                    <FaRegComment className="icon" />
                     <span>{ post.comments.length }</span>
                   </Link>
                 </li>

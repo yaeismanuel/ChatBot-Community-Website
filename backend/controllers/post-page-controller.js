@@ -10,13 +10,12 @@ const getCurrentDate = () => {
 const getPosts = async (req, res) => {
   try {
     const { id } = req.query;
-    console.log(id);
     if (id) {
       const post = await postModel.findOne({ _id: id }).populate('author');
       res.json(resObject(post, true));
       return;
     }
-    const posts = await postModel.find({}).sort({ createdAt: -1 }).populate('author');
+    const posts = await postModel.find({}).sort({ createdAt: -1 }).populate('author').populate('comments.author');
     res.json(resObject(posts, true));
   } catch (e) {
     res.json(resObject(null, false, 'Failed to fetch posts.'));
@@ -60,8 +59,8 @@ const addPostComment = async (req, res) => {
     data.author = user._id;
     data.date = getCurrentDate();
     
-    const post = await postModel.findOne({ _id: postId });
-    const addComment = await postModel.findOneAndUpdate({ _id: postId }, { comments: [ ...post.comments, data ] }, { new: true });
+    const post = await postModel.findOne({ _id: data.postId });
+    const addComment = await postModel.findOneAndUpdate({ _id: data.postId }, { comments: [ ...post.comments, data ] }, { new: true }).populate('author').populate('comments.author');
     
     res.json(resObject(addComment, true));
   } catch (e) {

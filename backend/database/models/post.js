@@ -61,7 +61,7 @@ const postSchema = new mongoose.Schema({
     default: 0
   },
   whoLiked: [String],
-  comments: [Object],
+  comments: [commentSchema],
   author: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,

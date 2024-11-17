@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { ContextData } from '../App';
 import { FaXmark } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
-import { FaPlusCircle, FaBook } from "react-icons/fa";
+import { FaPlusCircle, FaBook, FaNewspaper } from "react-icons/fa";
 
 import defaultProfile from '../assets/defaultProfile.png';
 
@@ -41,7 +41,7 @@ const Menu = () => {
         <ul className="contents">
           <li onClick={() => setToggle(false)}>
             <Link to="/feed">
-              <FaBook className="plusIcon" />
+              <FaNewspaper className="plusIcon" />
               Newsfeed
             </Link>
           </li>

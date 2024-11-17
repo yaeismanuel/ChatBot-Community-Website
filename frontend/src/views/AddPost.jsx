@@ -1,11 +1,13 @@
 import { useState, useEffect, useRef, useContext } from 'react';
 import { ContextData } from '../App';
 import { usePost } from '../hooks/Requests';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const AddPost = () => {
   const { setActive } = useContext(ContextData);
   const messageRef = useRef(null);
+  const navigate = useNavigate();
   
   const { loading, data, error, postData } = usePost('/api/posts/add');
   
@@ -24,6 +26,12 @@ const AddPost = () => {
     setActive({});
   }, []);
   
+  useEffect(() => {
+    if (data?.success) {
+      navigate('/feed');
+    }
+  }, [data]);
+  
   return (
     <div className="addAnnounce">
       <form onSubmit={handleSubmit}>
@@ -32,7 +40,7 @@ const AddPost = () => {
           Message:
           <textarea ref={messageRef} placeholder="Enter a message..." rows={4}></textarea>
         </label>
-        <button>{ loading ? 'Processing...' : 'Submit'}</button>
+        <button>{ loading ? 'Posting...' : 'Post'}</button>
       </form>
         {
           (error && error.authError) ?

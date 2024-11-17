@@ -11,18 +11,46 @@ const Post = () => {
   const { loading, data, error, retry } = useFetch(`/api/posts/?id=${id}`);
   const { loading: postloading , data: postdata, error: posterror, postData } = usePost(`/api/posts/addcomment`);
   
+  const [postInfo, setPostInfo] = useState({ loading: true });
   const commentRef = useRef(null);
+  const scrollRef = useRef(null);
   
   const handleComment = () => {
     if (commentRef.current.value === '') return;
     const reqdata = {
-      postId: data?.response?._id,
+      postId: data.response._id,
       message: commentRef?.current?.value?.trim()
     }
     postData(reqdata);
+    commentRef.current.value = '';
   }
   
-  if (loading) return (
+  const scrollToBottom = () => {
+    if (scrollRef.current) {
+      const div = scrollRef.current;
+      div.scrollTop = div.scrollHeight;
+    }
+  }
+  
+  useEffect(() => {
+    if (data?.success) {
+      setPostInfo({
+        data: data.response,
+        loading: false
+      });
+    }
+    if (postdata?.success) {
+      setPostInfo({
+        data: postdata.response,
+        loading: false
+      });
+      setTimeout(function() {
+        scrollToBottom();
+      }, 300);
+    }
+  }, [data, postdata]);
+  
+  if (postInfo.loading) return (
     <div className="loaderContainer">
       <div className="loader"></div>
     </div>
@@ -50,8 +78,8 @@ const Post = () => {
             <div className="author">
               <div className="img" style={{ backgroundImage: `url("${defaultProfile}")` }}></div>
               <div className="info">
-                <p>{ data?.response?.author?.name}</p>
-                <span>{ data?.response?.author?.role } • { data?.response?.date }</span>
+                <p>{ postInfo?.data?.author?.name}</p>
+                <span>{ postInfo?.data?.author?.role } • { postInfo?.data?.date }</span>
               </div>
             </div>
             <div className="postSettings">
@@ -59,16 +87,16 @@ const Post = () => {
             </div>
           </div>
           <div className="postBody">
-            <pre>{ data?.response?.message }</pre>
+            <pre>{ postInfo?.data?.message }</pre>
           </div>
           <div className="postAction">
             <li>
               <FaRegThumbsUp className="icon" />
-              <span>{ data?.response?.likes }</span>
+              <span>{ postInfo?.data?.likes }</span>
             </li>
             <li className="commentsBtn">
               <FaRegComment className="icon" />
-              <span>{ data?.response?.comments?.length }</span>
+              <span>{ postInfo?.data?.comments?.length }</span>
             </li>
             <li>
               <FaLink className="icon linkIcon" />
@@ -78,15 +106,15 @@ const Post = () => {
             <div className="commentsHead">
               <p>Comments</p>
             </div>
-            <div className="comments">
+            <div className="comments" ref={ scrollRef }>
               {
-                data?.response?.comments?.length == 0 ?
+                postInfo?.data?.comments?.length == 0 ?
                   <p className="noComments">Be the first to comment.</p> :
-                  data?.response?.comments?.map((comment, id) => (
+                  postInfo?.data?.comments?.map((comment, id) => (
                     <div className="comment" key={ id }>
                       <div className="commentHead">
                         <div className="comAuthor">
-                          <div className="img" style={{ backgroundImage: `url("${defaultProfile}")` }}></div>
+                          <div className="img" style={{ backgroundImage: comment?.author?.img ? `url("${ comment.author.img }` : `url("${defaultProfile}")` }}></div>
                           <div className="info">
                             <p>{ comment?.author?.name }</p>
                             <span>{ comment?.author?.role } • { comment?.date }</span>
@@ -113,7 +141,10 @@ const Post = () => {
                 <FaImages className="icon" />
               </div>
               <input type="text" ref={ commentRef } placeholder="Write a message..." />
-              <div className="send" onClick={ handleComment }>
+              <div className="send"
+                onClick={ handleComment }
+                disabled={ postloading }
+                style={{ background: postloading && 'var(--darkColor)'}}>
                 <FaPaperPlane className="icon" />
               </div>
             </div>

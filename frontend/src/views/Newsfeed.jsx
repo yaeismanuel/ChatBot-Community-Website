@@ -21,7 +21,7 @@ const Newsfeed = () => {
   
   return (
     <div className="container">
-      <DisplayPosts posts={data.response}/>
+      <DisplayPosts posts={data?.response}/>
     </div>
   )
 }
