@@ -11,7 +11,6 @@ const getCurrentDate = () => {
 
 const getAnnouncements = async (req, res) => {
   try {
-    // await announceModel.deleteMany({})
     const announcements = await announceModel.find({}).sort({ createdAt: -1 });
     res.json(resObject(announcements, true));
   } catch (e) {

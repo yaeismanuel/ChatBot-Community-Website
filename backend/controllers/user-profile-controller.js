@@ -47,7 +47,7 @@ const getUsers = async (req, res) => {
     if (user?.role === 'Admin') {
       const users = await userModel.find({});
       const usersData = users.map(user => ({
-        id: user.id,
+        id: user._id,
         name: user.name,
         img: user.img,
         username: user.username,
@@ -83,13 +83,13 @@ const updateProfile = async (req, res) => {
     
     if (user.role == 'Admin') {
       if (del) {
-        const deleteUser = await userModel.findOneAndDelete({ id });
+        const deleteUser = await userModel.findOneAndDelete({ _id: id });
         res.json(resObject({ id }, true));
         return;
       }
-      const update = await userModel.findOneAndUpdate({ id }, { role: q }, { new: true })
+      const update = await userModel.findOneAndUpdate({ _id: id }, { role: q }, { new: true })
       res.json(resObject({
-        id: update.id,
+        id: update._id,
         name: update.name,
         img: update.img,
         username: update.username,

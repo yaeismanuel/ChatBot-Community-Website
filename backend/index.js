@@ -35,14 +35,21 @@ app.use('/api/websites', require('./routes/websites-page'));
 app.use('/api/homepage', require('./routes/homepage'));
 app.use('/api/apis', require('./routes/api-page'));
 app.use('/api/fbpages', require('./routes/fbpage'));
+app.use('/api/fbpages', require('./routes/fbpage'));
+app.use('/api/posts', require('./routes/post-page'));
 
 // Database connection
-connectMongoDB().then((connection) => {
+connectMongoDB().then((con) => {
   console.log('Database connected.');
-}).catch((e) => console.log('Database connection error.'))
+  require('./database/models/user').find({}).then(d => {})
 
-// Start the server
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}.`);
-  console.log(`Frontend: ${frontend}`);
-});
+  // Start the server
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}.`);
+    console.log(`Frontend: ${frontend}`);
+  });
+}).catch((e) => {
+  console.log('Database connection error.')
+  process.exit(1);
+})
+
