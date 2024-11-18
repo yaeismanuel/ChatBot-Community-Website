@@ -11,7 +11,7 @@ const getPosts = async (req, res) => {
   try {
     const { id } = req.query;
     if (id) {
-      const post = await postModel.findOne({ _id: id }).populate('author');
+      const post = await postModel.findOne({ _id: id }).populate('author').populate('comments.author');
       res.json(resObject(post, true));
       return;
     }
@@ -64,7 +64,45 @@ const addPostComment = async (req, res) => {
     
     res.json(resObject(addComment, true));
   } catch (e) {
-    res.json(resObject(null, false, 'Failed to add post.'));
+    res.json(resObject(null, false, 'Failed to add comment.'));
+    console.log(e);
+  }
+}
+
+const likePost = async (req, res) => {
+  try {
+    const data = req.body;
+    const { userId } = res.locals;
+    
+    if (!data.postId) return res.json(resObject(null, false, 'PostId of post is mandatory.'));
+    
+    const user = await userModel.findOne({ id: userId });
+    
+    if (!user) return res.json(resObject({ authError: true }, false, 'You are not authorized to do this action.'));
+    
+    const filter = { _id: data.postId }
+    
+    const post = await postModel.findOne(filter);
+    
+    if (data.commentId) {
+      return;
+    }
+    
+    if (post.whoLiked.includes(userId)) {
+      const update = await postModel.findOneAndUpdate(filter, { 
+        likes: announce.likes - 1,
+        whoLiked: announce.whoLiked.filter((a) => a !== userId)
+      }, { new: true });
+      res.json(resObject(update, true));
+    } else {
+      const update = await postModel.findOneAndUpdate(filter, { 
+        likes: announce.likes + 1,
+        whoLiked: [ ...announce.whoLiked, userId ]
+      }, { new: true });
+      res.json(resObject(update, true));
+    }
+  } catch (e) {
+    res.json(resObject(null, false, 'Failed to like post / comment.'));
     console.log(e);
   }
 }
@@ -72,5 +110,6 @@ const addPostComment = async (req, res) => {
 module.exports = {
   getPosts,
   addPost,
-  addPostComment
+  addPostComment,
+  likePost
 }
