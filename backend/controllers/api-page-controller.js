@@ -19,7 +19,7 @@ const addApi = async (req, res) => {
     
     if (!newApi.name || !newApi.owner || !newApi.link) return res.json(resObject(null, false, 'Name, owner, and link of API are mandatory.'));
     
-    const user = await userModel.findOne({ id: userId });
+    const user = await userModel.findOne({ _id: userId });
     
     if (user.role == 'Moderator' || user.role == 'Admin') {
       const api = await apiModel.create(newApi);

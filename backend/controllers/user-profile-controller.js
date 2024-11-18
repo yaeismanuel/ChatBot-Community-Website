@@ -4,9 +4,9 @@ const resObject = require('../configs/response');
 const getUserInfo = async (req, res) => {
   try {
     const { userId } = res.locals;
-    const user = await userModel.findOne({ id: userId });
+    const user = await userModel.findOne({ _id: userId });
     const userData = {
-      id: user.id,
+      _id: user._id,
       name: user.name,
       img: user.img,
       username: user.username,
@@ -23,7 +23,7 @@ const getManagement = async (req, res) => {
   try {
     const users = await userModel.find({});
     const usersData = users.map(user => ({
-      id: user.id,
+      _id: user._id,
       name: user.name,
       img: user.img,
       username: user.username,
@@ -40,7 +40,7 @@ const getManagement = async (req, res) => {
 const getUsers = async (req, res) => {
   try {
     const { userId } = res.locals;
-    const user = await userModel.findOne({ id: userId });
+    const user = await userModel.findOne({ _id: userId });
     
     if (!user) return res.json(resObject({ authError: true }, false, 'You are not authorized to do this action.'));
     
@@ -79,7 +79,7 @@ const updateProfile = async (req, res) => {
         message: 'Not logged in.'
       }, false));
     
-    const user = await userModel.findOne({ id: userId });
+    const user = await userModel.findOne({ _id: userId });
     
     if (user.role == 'Admin') {
       if (del) {

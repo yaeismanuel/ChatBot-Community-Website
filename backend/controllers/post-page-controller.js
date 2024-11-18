@@ -30,7 +30,7 @@ const addPost = async (req, res) => {
     
     if (!post.message) return res.json(resObject(null, false, 'Message of post is mandatory.'));
     
-    const user = await userModel.findOne({ id: userId });
+    const user = await userModel.findOne({ _id: userId });
     
     if (!user) return res.json(resObject({ authError: true }, false, 'You are not authorized to do this action.'));
     
@@ -52,7 +52,7 @@ const addPostComment = async (req, res) => {
     
     if (!data.postId || !data.message) return res.json(resObject(null, false, 'Message and postId of post is mandatory.'));
     
-    const user = await userModel.findOne({ id: userId });
+    const user = await userModel.findOne({ _id: userId });
     
     if (!user) return res.json(resObject({ authError: true }, false, 'You are not authorized to do this action.'));
     
@@ -76,7 +76,7 @@ const likePost = async (req, res) => {
     
     if (!data.postId) return res.json(resObject(null, false, 'PostId of post is mandatory.'));
     
-    const user = await userModel.findOne({ id: userId });
+    const user = await userModel.findOne({ _id: userId });
     
     if (!user) return res.json(resObject({ authError: true }, false, 'You are not authorized to do this action.'));
     
@@ -90,15 +90,15 @@ const likePost = async (req, res) => {
     
     if (post.whoLiked.includes(userId)) {
       const update = await postModel.findOneAndUpdate(filter, { 
-        likes: announce.likes - 1,
-        whoLiked: announce.whoLiked.filter((a) => a !== userId)
-      }, { new: true });
+        likes: post.likes - 1,
+        whoLiked: post.whoLiked.filter((a) => a !== userId)
+      }, { new: true }).populate('author').populate('comments.author');
       res.json(resObject(update, true));
     } else {
       const update = await postModel.findOneAndUpdate(filter, { 
-        likes: announce.likes + 1,
-        whoLiked: [ ...announce.whoLiked, userId ]
-      }, { new: true });
+        likes: post.likes + 1,
+        whoLiked: [ ...post.whoLiked, userId ]
+      }, { new: true }).populate('author').populate('comments.author');
       res.json(resObject(update, true));
     }
   } catch (e) {

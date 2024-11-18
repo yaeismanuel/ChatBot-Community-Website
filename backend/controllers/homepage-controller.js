@@ -26,7 +26,7 @@ const addAnnounce = async (req, res) => {
     
     if (!announce.message) return res.json(resObject(null, false, 'Message of announcement is mandatory.'));
     
-    const user = await userModel.findOne({ id: userId });
+    const user = await userModel.findOne({ _id: userId });
     
     if (!user) return res.json(resObject({ authError: true }, false, 'You are not authorized to do this action.'));
     

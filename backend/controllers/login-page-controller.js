@@ -20,7 +20,7 @@ const login = async (req, res) => {
     const found = await userModel.findOne({ username: username });
     if (found) {
       const userData = {
-        id: found.id,
+        _id: found._id,
         name: found.name,
         username: found.username,
         role: found.role,
@@ -32,7 +32,7 @@ const login = async (req, res) => {
         };
         
         if (isCorrect) {
-          const token = await createToken(userData.id);
+          const token = await createToken(userData._id);
           res.cookie('jwt', token, { httpOnly: true, maxAge: expiration * 1000, sameSite: 'none' });
           res.json(resObject({ ...userData, token }, true, 'Logged In.'));
         } else {
@@ -69,13 +69,13 @@ const signup = async (req, res) => {
           const newUser = await userModel.create(newUserData);
           
           const userData = {
-            id: newUser.id,
+            _id: newUser._id,
             name: newUser.name,
             username: newUser.username,
             role: newUser.role,
           }
           
-          const token = await createToken(newUser.id);
+          const token = await createToken(newUser._id);
           res.cookie('jwt', token, { httpOnly: true, maxAge: expiration * 1000, sameSite: 'none' });
           res.json(resObject({ ...userData, token }, true, 'Signed In.'));
         } catch (e) {

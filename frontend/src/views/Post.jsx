@@ -10,6 +10,7 @@ const Post = () => {
   const { id } = useParams();
   const { loading, data, error, retry } = useFetch(`/api/posts/?id=${id}`);
   const { loading: postloading , data: postdata, error: posterror, postData } = usePost(`/api/posts/addcomment`);
+  const { loading: likeloading , data: likedata, error: likeerror, postData: likePost } = usePost(`/api/posts/likepost`);
   
   const [postInfo, setPostInfo] = useState({ loading: true });
   const commentRef = useRef(null);

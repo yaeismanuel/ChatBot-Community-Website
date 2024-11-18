@@ -19,7 +19,7 @@ const addWebsite = async (req, res) => {
     
     if (!web.name || !web.thumbnail || !web.link || !web.developer || !web.devFb) return res.json(resObject(null, false, 'Name, thumbnail, link, developer, and devFb of the website are mandatory.'));
     
-    const user = await userModel.findOne({ id: userId });
+    const user = await userModel.findOne({ _id: userId });
     
     if (!user) return res.json(resObject({ authError: true }, false, 'You are not authorized to do this action.'));
     

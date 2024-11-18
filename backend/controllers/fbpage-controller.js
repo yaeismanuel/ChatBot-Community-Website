@@ -19,7 +19,7 @@ const addFbpage = async (req, res) => {
     
     if (!newFbpage.name || !newFbpage.owner) return res.json(resObject(null, false, 'Name and owner of Fb bot page are mandatory.'));
     
-    const user = await userModel.findOne({ id: userId });
+    const user = await userModel.findOne({ _id: userId });
     
     if (user.role == 'Moderator' || user.role == 'Admin') {
       const fbpage = await fbpageModel.create(newFbpage);

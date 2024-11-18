@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect, useContext } from 'react';
 import { ContextData } from '../App';
+import { usePost } from '../hooks/Requests';
 import { FaRegThumbsUp, FaThumbsUp } from "react-icons/fa";
 import { FaXmark } from 'react-icons/fa6';
-import { usePost } from '../hooks/Requests';
 import defaultProfile from '../assets/defaultProfile.png';
 
 export const DisplayAnnouncements = ({ announcements, refetch }) => {
@@ -10,7 +10,7 @@ export const DisplayAnnouncements = ({ announcements, refetch }) => {
   const { loading, data, error, postData } = usePost('/api/homepage/like');
   const [current, setCurrent] = useState(announcements);
   const [announceId, setAnnounceId] = useState(null);
-  const [authError, setToggle] = useState(null);
+  const [authError, setAuthError] = useState(null);
   const announceIdRefs = announcements?.map(a => useRef(null));
   
   
@@ -33,9 +33,9 @@ export const DisplayAnnouncements = ({ announcements, refetch }) => {
     
     if (error) {
       if (error.authError) {
-        setToggle(true);
+        setAuthError(true);
         setTimeout(function() {
-          setToggle(false);
+          setAuthError(false);
         }, 7000);
       }
     }
@@ -75,7 +75,7 @@ export const DisplayAnnouncements = ({ announcements, refetch }) => {
                     <>...</> :
                     <>
                       {
-                        announce.whoLiked.includes(userData?.id) ? 
+                        announce.whoLiked.includes(userData?._id) ? 
                         <FaThumbsUp /> : 
                         <FaRegThumbsUp />
                       }
