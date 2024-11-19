@@ -73,7 +73,7 @@ const DisplayPosts = ({ posts, retry }) => {
               <div className="postContent">
                 <div className="postHeader">
                   <div className="author">
-                    <div className="img" style={{ backgroundImage: `url("${defaultProfile}")` }}></div>
+                    <div className="img" style={{ backgroundImage: post.author.img ? `url("${post.author.img}")` : `url("${defaultProfile}")` }}></div>
                     <div className="info">
                       <p>{ post.author.name }</p>
                       <span>{ post.author.role } • { post.date }</span>
