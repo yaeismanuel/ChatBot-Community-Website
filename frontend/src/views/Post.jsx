@@ -182,7 +182,7 @@ const Post = () => {
                     <div className="comment" key={ id }>
                       <div className="commentHead">
                         <div className="comAuthor">
-                          <div className="img" style={{ backgroundImage: comment?.author?.img ? `url("${ comment.author.img }` : `url("${defaultProfile}")` }}></div>
+                          <div className="img" style={{ backgroundImage: comment?.author?.img ? `url("${comment.author.img}` : `url("${defaultProfile}")` }}></div>
                           <div className="info">
                             <p>{ comment?.author?.name }</p>
                             <span>{ comment?.author?.role } • { comment?.date }</span>
