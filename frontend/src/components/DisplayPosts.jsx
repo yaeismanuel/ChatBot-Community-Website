@@ -2,12 +2,13 @@ import { useState, useRef, useEffect, useContext } from 'react';
 import { ContextData } from '../App';
 import { usePost } from '../hooks/Requests';
 import { FaThumbsUp, FaRegThumbsUp, FaRegComment, FaLink, FaImages, FaPaperPlane, FaPlusCircle, FaCheck } from 'react-icons/fa';
+import { BiRefresh } from "react-icons/bi";
 import { RxDotsHorizontal } from "react-icons/rx";
 import { Link } from 'react-router-dom';
 
 import defaultProfile from '../assets/defaultProfile.png';
 
-const DisplayPosts = ({ posts }) => {
+const DisplayPosts = ({ posts, retry }) => {
   const { userData } = useContext(ContextData);
   const { loading, data, error, postData } = usePost('/api/posts/likepost');
   const [current, setCurrent] = useState(posts);
@@ -24,7 +25,6 @@ const DisplayPosts = ({ posts }) => {
     const link = `${window.location.origin}/post/${id}`;
     navigator.clipboard.writeText(link);
     setLink(id);
-    console.log(link);
   }
   
   useEffect(() => {
@@ -65,6 +65,7 @@ const DisplayPosts = ({ posts }) => {
             <FaPlusCircle className="newpostIcon" />
           </Link>
           📰 Newsfeed
+          <BiRefresh className="refreshBtn" onClick={() => retry()}/>
         </h2>
         {
           current?.map((post, id) => (

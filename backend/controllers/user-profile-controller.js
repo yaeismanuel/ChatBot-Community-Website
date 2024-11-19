@@ -5,6 +5,9 @@ const getUserInfo = async (req, res) => {
   try {
     const { userId } = res.locals;
     const user = await userModel.findOne({ _id: userId });
+    
+    if (!user) return res.json(resObject({ authError: true }, false, 'You are not logged in.'));
+    
     const userData = {
       _id: user._id,
       name: user.name,

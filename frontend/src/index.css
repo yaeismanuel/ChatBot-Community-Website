@@ -40,6 +40,7 @@
   position: absolute;
   top: 5rem;
   left: 50%;
+  z-index: 1;
   transform: translateX(-50%);
   background: var(--darkColor);
   overflow: hidden;
@@ -729,19 +730,17 @@ header .mode{
   gap: 1rem;
 }
 .posts h2{
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 10px;
   text-align: center;
-  position: relative;
-}
-.posts h2 a{
-  display: flex;
   align-items: center;
-  position: absolute;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
 }
 .posts h2 .newpostIcon{
   font-size: 1.4rem;
+}
+.posts h2 .refreshBtn{
+  font-size: 1.7rem;
 }
 .posts .post{
   width: 100%;
@@ -753,6 +752,9 @@ header .mode{
   border-bottom: 1px solid var(--darkColor);
   display: grid;
   grid-template-columns: auto 1fr auto;
+}
+.post .postHeading .icon{
+  font-size: 1.4rem;
 }
 .post .postContent{
   width: 100%;

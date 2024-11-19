@@ -1,21 +1,32 @@
-import { useState, useRef, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useState, useRef, useEffect, useContext } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useFetch, usePost } from '../hooks/Requests';
+import { ContextData } from '../App';
+import { BiRefresh } from "react-icons/bi";
 import { RxDotsHorizontal } from 'react-icons/rx';
-import { FaRegThumbsUp, FaRegComment, FaLink, FaImages, FaPaperPlane } from 'react-icons/fa';
+import { FaRegThumbsUp, FaThumbsUp, FaRegComment, FaLink, FaImages, FaPaperPlane, FaCheck } from 'react-icons/fa';
 
 import defaultProfile from '../assets/defaultProfile.png';
 
 const Post = () => {
+  const { userData } = useContext(ContextData);
   const { id } = useParams();
   const { loading, data, error, retry } = useFetch(`/api/posts/?id=${id}`);
   const { loading: postloading , data: postdata, error: posterror, postData } = usePost(`/api/posts/addcomment`);
   const { loading: likeloading , data: likedata, error: likeerror, postData: likePost } = usePost(`/api/posts/likepost`);
   
   const [postInfo, setPostInfo] = useState({ loading: true });
+  const [copiedLink, setLink] = useState(null);
+  const [postId, setPostId] = useState(null);
+  const [authError, setAuthError] = useState(null);
   const commentRef = useRef(null);
   const scrollRef = useRef(null);
+  const navigate = useNavigate();
   
+  const handleLike = (id) => {
+    likePost({ postId: id });
+    setPostId(id);
+  }
   const handleComment = () => {
     if (commentRef.current.value === '') return;
     const reqdata = {
@@ -25,18 +36,32 @@ const Post = () => {
     postData(reqdata);
     commentRef.current.value = '';
   }
-  
+  const handleRefresh = () => {
+    setPostInfo({ loading: true })
+    retry();
+  }
   const scrollToBottom = () => {
     if (scrollRef.current) {
       const div = scrollRef.current;
       div.scrollTop = div.scrollHeight;
     }
   }
+  const handleCopyLink = (id) => {
+    const link = `${window.location.origin}/post/${id}`;
+    navigator.clipboard.writeText(link);
+    setLink(id);
+  }
   
   useEffect(() => {
     if (data?.success) {
       setPostInfo({
         data: data.response,
+        loading: false
+      });
+    }
+    if (likedata?.success) {
+      setPostInfo({
+        data: likedata.response,
         loading: false
       });
     }
@@ -49,7 +74,26 @@ const Post = () => {
         scrollToBottom();
       }, 300);
     }
-  }, [data, postdata]);
+  }, [data, postdata, likedata]);
+  
+  useEffect(() => {
+    if (likeerror) {
+      if (likeerror?.authError) {
+        setAuthError(true);
+        setTimeout(function() {
+          setAuthError(false);
+        }, 7000);
+      }
+    }
+    if (posterror) {
+      if (posterror?.authError) {
+        setAuthError(true);
+        setTimeout(function() {
+          setAuthError(false);
+        }, 7000);
+      }
+    }
+  }, [likeerror, posterror])
   
   if (postInfo.loading) return (
     <div className="loaderContainer">
@@ -68,11 +112,20 @@ const Post = () => {
   
   return (
     <div className="container">
+            <div className="popupBox" style={{
+        height: authError && '75px',
+        border: authError && '1px solid var(--primary)',
+        transition: 'border 0.6s'
+      }}>
+        <div className="boxContents">
+          You need to be logged in to do this action...
+        </div>
+      </div>
       <div className="post">
         <div className="postHeading">
-          <div>{"< Back"}</div>
+          <div onClick={() => navigate(-1)}>{"< Back"}</div>
           <div></div>
-          <div>refresh</div>
+          <BiRefresh className="icon" onClick={ handleRefresh }/>
         </div>
         <div className="postContent">
           <div className="postHeader">
@@ -91,16 +144,30 @@ const Post = () => {
             <pre>{ postInfo?.data?.message }</pre>
           </div>
           <div className="postAction">
-            <li>
-              <FaRegThumbsUp className="icon" />
-              <span>{ postInfo?.data?.likes }</span>
+            <li onClick={() => handleLike(postInfo?.data?._id)}>
+              {
+                likeloading && postId === postInfo?.data?._id ?
+                <>...</> :
+                <>
+                  {
+                    postInfo?.data?.whoLiked.includes(userData?._id) ? 
+                    <FaThumbsUp className="icon" /> :
+                    <FaRegThumbsUp className="icon" />
+                  }
+                  <span>{ postInfo?.data?.likes }</span>
+                </>
+              }
             </li>
             <li className="commentsBtn">
               <FaRegComment className="icon" />
               <span>{ postInfo?.data?.comments?.length }</span>
             </li>
-            <li>
-              <FaLink className="icon linkIcon" />
+            <li onClick={() => handleCopyLink(postInfo?.data?._id) }>
+              {
+                copiedLink === postInfo?.data?._id ?
+                <FaCheck className="icon linkIcon"/> :
+                <FaLink className="icon linkIcon" />
+              }
             </li>
           </div>
           <div className="postComments">
