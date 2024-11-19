@@ -130,9 +130,9 @@ const Post = () => {
         <div className="postContent">
           <div className="postHeader">
             <div className="author">
-              <div className="img" style={{ backgroundImage: `url("${defaultProfile}")` }}></div>
+              <div className="img" style={{ backgroundImage: postInfo?.data?.author?.img ? `url("${postInfo?.data?.author?.img}")` : `url("${defaultProfile}")` }}></div>
               <div className="info">
-                <p>{ postInfo?.data?.author?.name}</p>
+                <p>{ postInfo?.data?.author?.name }</p>
                 <span>{ postInfo?.data?.author?.role } • { postInfo?.data?.date }</span>
               </div>
             </div>
