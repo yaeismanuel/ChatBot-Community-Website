@@ -4,6 +4,7 @@ import { ContextData } from "../App";
 import { usePost } from "../hooks/Requests";
 import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
+import { useQuery } from "@tanstack/react-query";
 import Joi from "joi";
 
 const schema = Joi.object({
@@ -19,6 +20,7 @@ const Signup = () => {
   const [loggedIn, setLoggedIn] = useState(false);
 
   const { loading, data, error, postData } = usePost("/signup");
+  const { isLoading } = useQuery("/signup");
 
   const {
     register,
