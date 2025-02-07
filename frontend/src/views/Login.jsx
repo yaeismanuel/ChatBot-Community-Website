@@ -10,8 +10,8 @@ import Axios from "axios";
 import Config from "../../config.json";
 
 const schema = Joi.object({
-  username: Joi.string().required().messages({ "any.required": "Username is required." }),
-  password: Joi.string().required().messages({ "any.required": "Password is required." })
+  username: Joi.string().required().messages({ 'any.required': 'Username is required.' }),
+  password: Joi.string().required().messages({ 'any.required': "Password is required." })
 });
 
 const Login = () => {
@@ -28,7 +28,7 @@ const Login = () => {
       }
     });
 
-    if ()
+    return data;
   };
 
   const { loading, data, error, postData } = usePost("/login");
@@ -76,13 +76,13 @@ const Login = () => {
           Username:
           <input {...register("username")} type="text" />
           {errors.username && <p>{errors.username.message}</p>}
-          {loginData?.response?.username && <p>User not found.</p>}
+          {loginData?.response?.error?.username && <p>User not found.</p>}
         </label>
         <label>
           Password:
           <input {...register("password")} type="password" />
           {errors.password && <p>{errors.password.message}</p>}
-          {loginData?.response?.password && <p>Incorrect password.</p>}
+          {loginData?.response?.error?.password && <p>Incorrect password.</p>}
         </label>
         <div className="remember">
           <input type="checkbox" />
