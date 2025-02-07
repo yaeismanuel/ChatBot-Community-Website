@@ -28,7 +28,7 @@ const Login = () => {
       }
     });
 
-    return data;
+    if ()
   };
 
   const { loading, data, error, postData } = usePost("/login");
@@ -76,13 +76,13 @@ const Login = () => {
           Username:
           <input {...register("username")} type="text" />
           {errors.username && <p>{errors.username.message}</p>}
-          {error?.username && <p>User not found.</p>}
+          {loginData?.response?.username && <p>User not found.</p>}
         </label>
         <label>
           Password:
           <input {...register("password")} type="password" />
           {errors.password && <p>{errors.password.message}</p>}
-          {error?.password && <p>Incorrect password.</p>}
+          {loginData?.response?.password && <p>Incorrect password.</p>}
         </label>
         <div className="remember">
           <input type="checkbox" />
