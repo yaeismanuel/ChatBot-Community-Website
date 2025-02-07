@@ -1,66 +1,102 @@
-import { useState, useEffect, useRef, useContext } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { ContextData } from '../App';
-import { usePost } from '../hooks/Requests';
-import axios from 'axios';
+import { useState, useEffect, useRef, useContext } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { ContextData } from "../App";
+import { usePost } from "../hooks/Requests";
+import { useMutation } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import { joiResolver } from "@hookform/resolvers/joi";
+import Joi from "joi";
+import Axios from "axios";
+import Config from "../../config.json";
+
+const schema = Joi.object({
+  username: Joi.string().required().messages({ "any.required": "Username is required." }),
+  password: Joi.string().required().messages({ "any.required": "Password is required." })
+});
 
 const Login = () => {
   const { setUserData, setActive } = useContext(ContextData);
   const navigate = useNavigate();
-  const usernameRef = useRef(null);
-  const passwordRef = useRef(null);
   const [loggedIn, setLoggedIn] = useState(false);
-  
-  const { loading, data, error, postData } = usePost('/login');
-  
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const credentials = {
-      username: usernameRef.current.value.trim(),
-      password: passwordRef.current.value.trim(),
+
+  const postRequest = async payload => {
+    const serverOrigin = Config.production ? Config.server : Config.devServer;
+    const token = localStorage.getItem("token");
+    const { data } = await Axios.post(`${serverOrigin}/login`, payload, {
+      headers: {
+        Authentication: `Bearer ${token}`
+      }
+    });
+
+    return data;
+  };
+
+  const { loading, data, error, postData } = usePost("/login");
+  const {
+    mutateAsync: login,
+    data: loginData,
+    isPending,
+    error: loginError
+  } = useMutation({
+    mutationFn: postRequest
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({ resolver: joiResolver(schema) });
+
+  const onSubmit = credentials => {
+    try {
+      // postData(credentials);
+      login(credentials);
+    } catch (e) {
+      console.log(e);
     }
-    postData(credentials);
-  }
-  
+  };
+
   useEffect(() => {
     setActive({});
   }, []);
-  
+
   useEffect(() => {
-    if (data?.success) {
-      setUserData(data.response);
-      localStorage.setItem('token', data.response.token);
-      navigate('/');
+    if (loginData?.success) {
+      setUserData(loginData.response);
+      localStorage.setItem("token", loginData.response.token);
+      navigate("/");
     }
   }, [data]);
-  
+
   return (
     <div className="login">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <h2>Login</h2>
         <label>
           Username:
-          <input type="text" ref={usernameRef}/>
-          { error?.username && <p>User not found.</p> }
+          <input {...register("username")} type="text" />
+          {errors.username && <p>{errors.username.message}</p>}
+          {error?.username && <p>User not found.</p>}
         </label>
         <label>
           Password:
-          <input type="password" ref={passwordRef}/>
-          { error?.password && <p>Incorrect password.</p> }
+          <input {...register("password")} type="password" />
+          {errors.password && <p>{errors.password.message}</p>}
+          {error?.password && <p>Incorrect password.</p>}
         </label>
         <div className="remember">
           <input type="checkbox" />
           Remember me
         </div>
-        <button>{ loading ? 'Logging in...' : 'Login' }</button>
-        { (error?.network || error?.server) && <p>Something went wrong.</p> }
+        <button>{isPending ? "Logging in..." : "Login"}</button>
+        {loginError && <p>Something went wrong.</p>}
         <div className="option">
           <p>Don't have an account? </p>
           <Link to="/signup">Signup</Link>
         </div>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
