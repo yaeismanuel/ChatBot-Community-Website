@@ -3,20 +3,23 @@ import { ContextData } from '../App';
 import { FaXmark } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
 import { FaPlusCircle, FaBook, FaNewspaper } from "react-icons/fa";
+import { useMainStore } from "../store";
 
 import defaultProfile from '../assets/defaultProfile.png';
 
 const Menu = () => {
-  const { views, userData, setUserData, toggle, setToggle } = useContext(ContextData);
+  const toggleMenuStatus = useMainStore(state => state.toggleMenuStatus);
+  const toggleMenu = useMainStore(state => state.toggleMenu);
+  const { views, userData, setUserData } = useContext(ContextData);
   
   const handleLogout = () => {
     localStorage.removeItem('token');
     setUserData(null);
-    setToggle(false);
+    toggleMenu(false);
   }
   
   return (
-    <div className="menu" style={{ width: toggle && '180px' }}>
+    <div className="menu" style={{ width: toggleMenuStatus && '180px' }}>
       <div className="profile">
         <div className="profilePic" style={{ backgroundImage: `url("${ userData?.img ? userData?.img : defaultProfile}")` }}></div>
         <div className="profileInfo">
@@ -28,18 +31,18 @@ const Menu = () => {
             </> :
             <>
               <Link to="/login">
-                <button onClick={() => setToggle(false)}>Login</button>
+                <button onClick={() => toggleMenu(false)}>Login</button>
               </Link>
             </>
           }
         </div>
-        <div className="closeMenu" onClick={() => setToggle(false)}>
+        <div className="closeMenu" onClick={() => toggleMenu(false)}>
           <FaXmark className="closeIcon" />
         </div>
       </div>
       <div className="menus">
         <ul className="contents">
-          <li onClick={() => setToggle(false)}>
+          <li onClick={() => toggleMenu(false)}>
             <Link to="/feed">
               <FaNewspaper className="plusIcon" />
               Newsfeed
@@ -49,25 +52,25 @@ const Menu = () => {
             (userData?.role == 'Moderator' || userData?.role == 'Admin') &&
             <>
               <p>MOD ACCESS</p>
-              <li onClick={() => setToggle(false)}>
+              <li onClick={() => toggleMenu(false)}>
                 <Link to="/addannounce">
                   <FaPlusCircle className="plusIcon" />
                   Announcement
                 </Link>
               </li>
-              <li onClick={() => setToggle(false)}>
+              <li onClick={() => toggleMenu(false)}>
                 <Link to="/addwebsite">
                   <FaPlusCircle className="plusIcon" />
                   Website
                 </Link>
               </li>
-              <li onClick={() => setToggle(false)}>
+              <li onClick={() => toggleMenu(false)}>
                 <Link to="/addfbpage">
                   <FaPlusCircle className="plusIcon" />
                   FB Page
                 </Link>
               </li>
-              <li onClick={() => setToggle(false)}>
+              <li onClick={() => toggleMenu(false)}>
                 <Link to="/addapi">
                   <FaPlusCircle className="plusIcon" />
                   API
@@ -79,7 +82,7 @@ const Menu = () => {
             (userData?.role == 'Admin') &&
             <>
               <p>ADMIN ACCESS</p>
-              <li onClick={() => setToggle(false)}>
+              <li onClick={() => toggleMenu(false)}>
                 <Link to="/manage">
                   <FaBook className="plusIcon" />
                   Manage accounts
