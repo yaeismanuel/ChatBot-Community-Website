@@ -17,7 +17,7 @@ const Header = () => {
 
   return (
     <header>
-      <div className="menuIcon" onClick={toggleMenu}>
+      <div className="menuIcon" onClick={() => toggleMenu(false)}>
         <TiThMenu />
       </div>
       <div className="logo">
